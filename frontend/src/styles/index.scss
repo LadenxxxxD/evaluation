@@ -1,0 +1,16 @@
+@import './reset.scss';
+@import './variables.scss';
+@import './common.scss';
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,600;1,700&display=swap');
+
+.iconfont {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+.bg-gradient {
+  background-image: linear-gradient(to bottom right, #ffffff, #bac6e0);
+}
