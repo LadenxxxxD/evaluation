@@ -272,6 +272,7 @@ export default class Login extends Vue {
 }
 .middle-input-container {
   flex: 1;
+  text-align: center;
   .login-title-logo {
     font-size: 48px;
   }

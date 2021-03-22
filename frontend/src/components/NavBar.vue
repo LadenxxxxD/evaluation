@@ -1,12 +1,14 @@
 <template>
   <nav>
-    <router-link v-for="item in list" :key="item.id" :to="item.link">{{
-      item.value
-    }}</router-link>
+    <router-link v-for="item in list" :key="item.id" :to="item.link">
+      {{
+        item.value
+      }}
+    </router-link>
   </nav>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from "vue";
 import { Component, Prop, Watch, Emit } from "vue-property-decorator";
 

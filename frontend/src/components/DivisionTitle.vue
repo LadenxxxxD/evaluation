@@ -1,12 +1,16 @@
 <template>
   <div class="division-title space-between">
     <span>推荐</span>
-    <a href>查看更多</a>
+    <a href="#">查看更多</a>
   </div>
 </template>
 
 <script lang="ts">
-export default {};
+import Vue from "vue";
+import { Component, Prop, Watch, Emit } from "vue-property-decorator";
+
+@Component
+export default class DivisionTitle extends Vue { };
 </script>
 
 <style lang="scss">

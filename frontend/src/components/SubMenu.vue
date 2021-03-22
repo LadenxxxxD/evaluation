@@ -6,8 +6,7 @@
       :key="item.id"
       :class="['sub-menu-item', { 'active': activeIndex === item.id }]"
       @click="changeActive(item.id, $event)"
-      >{{ item.value }}</span
-    >
+    >{{ item.value }}</span>
   </nav>
 </template>
 
@@ -37,7 +36,7 @@ export default class SubMenu extends Vue {
     // this.marker.style.width = e.target.offsetWidth;
     this.activeIndex = currentIndex;
   }
-  changeFixed(e) {
+  changeFixed(e: any) {
     console.log(e);
   }
 }
@@ -51,6 +50,7 @@ nav.sub-menu {
   position: sticky;
   top: -1px;
   border: 1px solid #f3f4f4;
+  text-align: center;
 
   span {
     color: #6e6d7a;

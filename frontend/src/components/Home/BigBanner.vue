@@ -5,13 +5,13 @@
     </div>
     <div class="top-bigbanner-column">
       <div class="top-bigbanner-second">
-        <img src="//nwzimg.wezhan.cn/contents/sitefiles2035/10175394/images/20226752.jpg" alt />
+        <img src="//nwzimg.wezhan.cn/contents/sitefiles2035/10175394/images/20226752.jpg" />
       </div>
       <div class="top-bigbanner-second">
-        <img src="http://pic.zaeke.com/img161527818228639.jpeg" alt />
+        <img src="http://pic.zaeke.com/img161527818228639.jpeg" />
       </div>
       <div class="top-bigbanner-second">
-        <img src="http://pic.zaeke.com/img161527821198819.jpeg" alt />
+        <img src="http://pic.zaeke.com/img161527821198819.jpeg" />
       </div>
     </div>
   </div>
