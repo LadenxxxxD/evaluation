@@ -1,24 +1,29 @@
 import Router from 'koa-router';
 import ApiResponse from '../../../lib/ApiResponse.js';
-import ArticleService from '../../service/LoginService.js'
+import ArticleService from '../../service/ArticleService.js'
 
 const article = new Router();
-// login.prefix("/login");
 
+article.get("/listByPage", async (ctx, next) => {
+  const { pageNum = 0, pageSize = 10 } = ctx.query;
+  try {
+    const data = await ArticleService.getArticleListByPage({ pageNum, pageSize });
+    ctx.body = new ApiResponse(0, `获取成功`, data);
+  } catch (err) {
+    console.error(err);
+    ctx.body = new ApiResponse(400, `获取失败: ${err.message}`);
+  }
+});
 
 article.get("/:id", async (ctx, next) => {
   const { id } = ctx.params;
-
   try {
-    const r = await ArticleService.findByUserName(username);
-    console.log('r: ', r);
+    const data = await ArticleService.getArticle(id);
+    ctx.body = new ApiResponse(0, `获取成功`, data);
   } catch (err) {
     console.error(err);
-    ctx.body = new ApiResponse(400, `登录失败: ${err.message}`);
+    ctx.body = new ApiResponse(400, `获取失败: ${err.message}`);
   }
-
 });
-
-
 
 export default article;

@@ -1,7 +1,7 @@
 <template>
   <div class="division-title space-between">
-    <span>推荐</span>
-    <a href="#">查看更多</a>
+    <span>{{ title }}</span>
+    <a v-if="showMore" href="#">查看更多</a>
   </div>
 </template>
 
@@ -10,14 +10,19 @@ import Vue from "vue";
 import { Component, Prop, Watch, Emit } from "vue-property-decorator";
 
 @Component
-export default class DivisionTitle extends Vue { };
+export default class DivisionTitle extends Vue {
+  @Prop({ type: String, default: 'title' })
+  title!: string;
+  @Prop({ type: Boolean, default: true })
+  showMore!: boolean;
+};
 </script>
 
 <style lang="scss">
 @import "../styles/variables.scss";
 
 .division-title {
-  background-color: #f5f5f5;
+  background-color: #fff;
   padding: 10px 24px;
   font-size: 14px;
   font-weight: bold;

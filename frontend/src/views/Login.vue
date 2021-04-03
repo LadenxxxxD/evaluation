@@ -174,12 +174,14 @@ export default class Login extends Vue {
         path: '/'
       })
     } else {
+      this.$message.error(response && response.message);
       console.log('登录失败: ', response.message);
     }
   }
 
   async register() {
     if (this.password !== this.confirmPassword) {
+      this.$message.error('两次密码不一致');
       console.log('两次密码不一致');
       return;
     }
@@ -197,7 +199,7 @@ export default class Login extends Vue {
         path: '/'
       })
     } else {
-      console.log('注册失败: ', response && response.message);
+      this.$message.error(response && response.message);
     }
   }
 

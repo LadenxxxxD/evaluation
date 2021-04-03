@@ -1,7 +1,7 @@
 <template>
   <!-- <main class="main-body-container"> -->
   <div style="max-width: 1200px; margin: 20px auto;">
-    <DivisionTitle></DivisionTitle>
+    <DivisionTitle title="推荐" />
     <div class="home">
       <div class="left">
         <BigBanner />
@@ -36,7 +36,6 @@ import { Component, Prop, Watch, Emit } from "vue-property-decorator";
 import DivisionTitle from "@/components/DivisionTitle.vue";
 import BigBanner from "@/components/Home/BigBanner.vue";
 import ArticleList from "@/components/Home/ArticleList.vue";
-import Axios from "axios";
 import request from "@/utils/request";
 
 @Component({
@@ -62,7 +61,7 @@ export default class Home extends Vue { }
   display: flex;
   flex-direction: column;
   flex: 1;
-  border: 1px solid #d1d2d3;
+  background-color: #fff;
   margin: 20px 0;
   padding: 30px 20px;
 }
@@ -79,7 +78,6 @@ export default class Home extends Vue { }
 .news {
   display: flex;
   flex-direction: column;
-  margin: 20px 0;
   .article-list {
     width: 860px;
     // border: 1px solid #d1d2d3;

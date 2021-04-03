@@ -1,6 +1,4 @@
-import { sequelize, testConnection } from '../../lib/sequelize.js';
-import sql from 'sequelize';
-const { DataTypes } = sql;
+import { sequelize, DataTypes, testConnection } from '../../lib/sequelize.js';
 
 
 /**

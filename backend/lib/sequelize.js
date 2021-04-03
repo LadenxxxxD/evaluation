@@ -1,9 +1,9 @@
 import Sequelize from 'sequelize';
-import config    from '../config.js';
+import config from '../config.js';
 
 const DB = config.DB_CONFIGS;
 
-const sequelize = new Sequelize(DB.database, DB.user, DB.password, {
+export const sequelize = new Sequelize(DB.database, DB.user, DB.password, {
     host: DB.host,
     port: DB.port,
     dialect: 'mariadb',
@@ -21,19 +21,23 @@ const sequelize = new Sequelize(DB.database, DB.user, DB.password, {
     logging: false
 });
 
+// 数据库类型枚举
+export const { DataTypes } = Sequelize;
+
 // 测试连接是否成功
-const testConnection = sequelize => {
+export const testConnection = sequelize => {
     sequelize
         .authenticate()
-        .then( () => {
+        .then(() => {
             console.log('Connection has been established successfully.');
         })
-        .catch( error => {
+        .catch(error => {
             console.error('Unable to connect to the database:', error);
         });
 }
 
-export {
+export default {
     sequelize,
+    DataTypes,
     testConnection
 };

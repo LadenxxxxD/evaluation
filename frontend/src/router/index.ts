@@ -8,27 +8,45 @@ const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'Home',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Home/Home.vue')
+    meta: {
+      keepAlive: true
+    },
+    component: () => import(/* webpackChunkName: "about" */ '@/views/Home/Home.vue')
   },
   {
     path: '/article/:id',
     name: 'Article',
-    component: () => import(/* webpackChunkName: "article" */ '../views/Article/Article.vue')
+    component: () => import(/* webpackChunkName: "article" */ '@/views/Article/Article.vue')
   },
   {
-    path: '/daogou',
-    name: 'Daogou',
-    component: () => import(/* webpackChunkName: "daogou" */ '../views/Daogou.vue')
+    path: '/guide',
+    name: 'guide',
+    component: () => import(/* webpackChunkName: "guide" */ '@/views/Guide/Guide.vue')
   },
   {
-    path: '/ceping',
-    name: 'Ceping',
-    component: () => import(/* webpackChunkName: "ceping" */ '../views/Ceping.vue')
+    path: '/guide/test',
+    name: 'guideTest',
+    component: () => import(/* webpackChunkName: "guideTest" */ '@/views/Guide/Test.vue')
+  },
+  {
+    path: '/evaluation',
+    name: 'evalution',
+    component: () => import(/* webpackChunkName: "evalution" */ '@/views/Evaluation/Evaluation.vue')
+  },
+  {
+    path: '/evaluation/details/:id',
+    name: 'details',
+    component: () => import(/* webpackChunkName: "details" */ '@/views/Evaluation/Details.vue')
   },
   {
     path: '/rank',
-    name: 'rank',
-    component: () => import(/* webpackChunkName: "rank" */ '../views/Rank.vue')
+    name: 'Rank',
+    component: () => import(/* webpackChunkName: "rank" */ '@/views/Rank/Rank.vue')
+  },
+  {
+    path: '/rank/mobile',
+    name: 'MobileRank',
+    component: () => import(/* webpackChunkName: "mobileRank" */ '@/views/Rank/Mobile.vue')
   },
   {
     path: '/login',
@@ -37,7 +55,7 @@ const routes: Array<RouteConfig> = [
       noHeader: true,
       keepAlive: true
     },
-    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
+    component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue')
   },
 ]
 

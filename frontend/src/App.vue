@@ -1,14 +1,10 @@
 <template>
   <div id="root">
     <header class="box-shadow-3" v-if="!$route.meta.noHeader">
-      <div class="flex-space-between">
-        <div></div>
-        <Navbar></Navbar>
-        <div></div>
-      </div>
-      <SubMenu />
+      <Header />
+      <!-- <SubMenu /> -->
     </header>
-    <main>
+    <main :class="{ 'with-header': !$route.meta.noHeader }">
       <keep-alive>
         <router-view v-if="$route.meta.keepAlive"></router-view>
       </keep-alive>
@@ -19,14 +15,14 @@
 
 <script lang="ts">
 import SubMenu from "@/components/SubMenu.vue";
-import Navbar from "@/components/Navbar.vue";
+import Header from "@/components/Header.vue";
 import Vue from "vue";
 import { Component, Prop, Watch, Emit } from "vue-property-decorator";
 
 @Component({
   components: {
     SubMenu,
-    Navbar,
+    Header
   }
 })
 export default class App extends Vue {
@@ -40,8 +36,8 @@ export default class App extends Vue {
   // font-family: Avenir, Helvetica, Arial, sans-serif;
   // font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
   //   "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-  // -webkit-font-smoothing: antialiased;
-  // -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   font-family: apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -49,15 +45,26 @@ export default class App extends Vue {
   width: 100vw;
   height: 100vh;
   position: relative;
+  // background-color: $mainBgColor;
+  // background-image: linear-gradient(to bottom right, #f3f5fa, #c6d0e5);
+  background-image: linear-gradient(to bottom right, #f3f5fa1c, #c6d0e5af),
+    url("assets/bg1.png");
+  background-size: cover;
+  overflow: auto;
   // margin-left: calc(100vw - 100%);
 }
 header {
   overflow: visible;
+  background: #fff;
 }
 main {
-  height: calc(100% - 150px);
+  height: 100%;
   margin: 0 auto;
-  padding: 20px 40px;
-  background-color: $mainBgColor;
+  padding: 0;
+
+  &.with-header {
+    height: calc(100% - 150px);
+    padding: 20px 40px;
+  }
 }
 </style>

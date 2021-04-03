@@ -22,10 +22,50 @@
 .box-shadow-3 {
   box-shadow: 0 0 18px rgba(0, 0, 0, 0.06);
 }
+.flex-wrapper {
+  display: flex;
+}
 .flex-space-between {
   display: flex;
   justify-content: space-between;
 }
 .flex-column {
+  display: flex;
   flex-direction: column;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+.flex-center-v {
+  display: flex;
+  align-items: center;
+}
+.flex-middle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 40px;
+}
+.card-20 {
+  @extend .card;
+  padding: 20px;
+}
+.card-10 {
+  @extend .card;
+  padding: 10px;
+}
+.card-10-hover {
+  @extend .card-10;
+  cursor: pointer;
+
+  &:hover {
+    @extend .shadow-modern;
+  }
 }

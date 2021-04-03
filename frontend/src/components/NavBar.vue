@@ -16,8 +16,8 @@ import { Component, Prop, Watch, Emit } from "vue-property-decorator";
 export default class NavBar extends Vue {
   list = [
     { id: 1, value: "热门", link: "/" },
-    { id: 2, value: "导购", link: "/daogou" },
-    { id: 3, value: "测评", link: "/ceping" },
+    { id: 2, value: "导购", link: "/guide" },
+    { id: 3, value: "测评", link: "/evaluation" },
     { id: 4, value: "排行榜", link: "/rank" },
   ];
 }
@@ -37,7 +37,7 @@ nav {
     text-decoration: none;
 
     &.router-link-exact-active {
-      color: #000000;
+      color: #281765;
     }
   }
 }

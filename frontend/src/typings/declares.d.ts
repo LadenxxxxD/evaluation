@@ -1,0 +1,1 @@
+declare module '@fengfengfeng/vue-juejin-comment';

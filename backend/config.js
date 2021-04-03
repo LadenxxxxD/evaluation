@@ -8,7 +8,7 @@ const DB_CONFIGS = {
 };
 const TOKEN = {
     secret: 'jwt_secret',
-    expiresIn: '1h' // 60 * 60s
+    expiresIn: '24h' // 60 * 60s
 }
 
 

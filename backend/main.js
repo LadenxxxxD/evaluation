@@ -10,7 +10,7 @@ import error401Handle from './middlewares/error401Handler.js';
 const app = new Koa();
 
 app.listen(3000);
-console.log("Server start runing in http://localhost:" + config.PORT);
+console.log("Backend server is runing at http://localhost:" + config.PORT);
 
 app.use(
 	cors({
