@@ -23,10 +23,21 @@
         >
           <use xlink:href="#icon-huabanfuben" />
         </svg>
-        <img
-          src="https://pic1.zhimg.com/v2-a97b59854b5dd12e8ba2d0e32abec7c3_is.jpg"
-          class="header-avator"
-        />
+        <a-dropdown :trigger="['click']" placement="bottomRight">
+          <img
+            :src="avatorImg"
+            class="header-avator"
+          />
+          <a-menu slot="overlay">
+            <a-menu-item key="0">
+              <a href="#">个人信息</a>
+            </a-menu-item>
+            <a-menu-divider />
+            <a-menu-item key="3">
+              <div @click="logout">注销登录</div >
+            </a-menu-item>
+          </a-menu>
+        </a-dropdown>
       </section>
     </div>
   </div>
@@ -35,7 +46,8 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component, Prop, Watch, Emit } from "vue-property-decorator";
-import Navbar from "@/components/Navbar.vue";
+import Navbar from "@/components/NavBar.vue";
+import request from '@/utils/request';
 
 @Component({
   components: {
@@ -43,13 +55,23 @@ import Navbar from "@/components/Navbar.vue";
   }
 })
 export default class Header extends Vue {
+  avatorImg = 'https://pic1.zhimg.com/v2-a97b59854b5dd12e8ba2d0e32abec7c3_is.jpg';
+  profileMenuVisible = false;
 
+  async logout() {
+    const response: any = await request.get(`http://localhost:3000/api/v1/logout`, { username: 'admin' });
+    if (response.code === 0) {
+      console.log('response: ', response);
+      location.reload();
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .header-container {
   padding: 0 60px;
+  user-select: none;
   .logo-wrapper {
     font-size: 20px;
     font-weight: 600;
@@ -59,10 +81,12 @@ export default class Header extends Vue {
     flex: 1;
     display: flex;
     justify-content: flex-end;
+    position: relative;
     .header-avator {
       border-radius: 8px;
       height: 38px;
       width: 38px;
+      cursor: pointer;
     }
   }
 }
