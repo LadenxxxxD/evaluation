@@ -24,17 +24,14 @@
           <use xlink:href="#icon-huabanfuben" />
         </svg>
         <a-dropdown :trigger="['click']" placement="bottomRight">
-          <img
-            :src="avatorImg"
-            class="header-avator"
-          />
+          <img :src="avatorImg" class="header-avator" />
           <a-menu slot="overlay">
             <a-menu-item key="0">
               <a href="#">个人信息</a>
             </a-menu-item>
             <a-menu-divider />
             <a-menu-item key="3">
-              <div @click="logout">注销登录</div >
+              <div @click="logout">注销登录</div>
             </a-menu-item>
           </a-menu>
         </a-dropdown>
