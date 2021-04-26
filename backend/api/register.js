@@ -1,7 +1,7 @@
 import Router       from 'koa-router';
 import mysql        from '../lib/mysql.js';
 import ApiResponse  from '../lib/ApiResponse.js';
-import bcrypt       from 'bcrypt';
+import bcrypt       from 'bcryptjs';
 
 const register = new Router();
 

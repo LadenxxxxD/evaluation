@@ -1,0 +1,14 @@
+{
+  "name": "evaluation",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "frontend": "npm run serve --prefix ./frontend",
+    "backend": "nodemon ./backend/main.js",
+    "start": "npm run frontend | npm run backend"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}

@@ -58,7 +58,6 @@ export default class Header extends Vue {
   async logout() {
     const response: any = await request.get(`http://localhost:3000/api/v1/logout`, { username: 'admin' });
     if (response.code === 0) {
-      console.log('response: ', response);
       location.reload();
     }
   }

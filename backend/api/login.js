@@ -4,7 +4,7 @@ import config from '../config.js';
 import auth from '../lib/jwt.js';
 import ApiResponse from '../lib/ApiResponse.js';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const login = new Router();
 // login.prefix("/login");

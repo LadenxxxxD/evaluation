@@ -6,14 +6,27 @@
     </div>
     <div class="test-title">我的性别</div>
     <div class="test-component">
-      <a-radio-group default-value="gender" button-style="solid">
+      <!-- <a-radio-group default-value="gender" button-style="solid">
         <a-radio-button value="gender" style="width: 80px; text-align: center;">男</a-radio-button>
         <a-radio-button value="womon" style="width: 80px; text-align: center;">女</a-radio-button>
-      </a-radio-group>
+      </a-radio-group> -->
+      <b-radio 
+        v-model="gender"
+        native-value="1">
+        男
+      </b-radio>
+      <b-radio
+        v-model="gender"
+        native-value="0">
+        女
+      </b-radio>
     </div>
     <div class="test-title">我的年龄</div>
     <div class="test-component">
-      <a-slider :default-value="22" :tooltip-visible="true" />
+      <!-- <a-slider :default-value="22" :tooltip-visible="true" /> -->
+      <b-field>
+        <b-slider :value="22" lazy tooltip-always></b-slider>
+      </b-field>
     </div>
     <div class="test-title-big">
       需求信息
@@ -21,7 +34,8 @@
     </div>
     <div class="test-title">我预期购买手机的价格段</div>
     <div class="test-component">
-      <a-slider range :default-value="[20, 50]" :min="600" :max="20000" />
+      <!-- <a-slider range :default-value="[20, 50]" :min="600" :max="20000" /> -->
+      <b-slider v-model="priceRange" type="is-danger" :min="600" :max="10000" :step="100"></b-slider>
     </div>
     <div class="test-title">多数时候，我更倾向使用手机</div>
     <div class="test-component">
@@ -54,7 +68,14 @@
     <div class="test-title">我想从这些品牌中挑选</div>
     <div class="test-component">
       <a-checkbox-group>
-        <a-checkbox value="apple">苹果</a-checkbox>
+        <b-checkbox v-model="brands" native-value="apple">苹果</b-checkbox>
+        <b-checkbox v-model="brands" native-value="samsong">三星</b-checkbox>
+        <b-checkbox v-model="brands" native-value="huawei">华为</b-checkbox>
+        <b-checkbox v-model="brands" native-value="xiaomi">小米</b-checkbox>
+        <b-checkbox v-model="brands" native-value="oppo">OPPO</b-checkbox>
+        <b-checkbox v-model="brands" native-value="vivo">VIVO</b-checkbox>
+        <b-checkbox v-model="brands" native-value="oneplus">一加</b-checkbox>
+        <!-- <a-checkbox value="apple">苹果</a-checkbox>
         <a-checkbox value="samsong">三星</a-checkbox>
         <a-checkbox value="huawei">华为</a-checkbox>
         <a-checkbox value="xiaomi">小米</a-checkbox>
@@ -66,15 +87,18 @@
         <a-checkbox value="redmi">红米</a-checkbox>
         <a-checkbox value="honor">荣耀</a-checkbox>
         <a-checkbox value="realme">Real Me</a-checkbox>
-        <a-checkbox value="IQOO">IQOO</a-checkbox>
+        <a-checkbox value="IQOO">IQOO</a-checkbox> -->
       </a-checkbox-group>
     </div>
     <a-row style="margin-top: 40px;">
       <a-col :span="4" :offset="1">
-        <a-button>取消</a-button>
+        <!-- <a-button>取消</a-button> -->
+        <b-button type="is-link" outlined>取消</b-button>
       </a-col>
       <a-col :span="4">
-        <a-button type="primary">确定</a-button>
+        <!-- <a-button type="primary">确定</a-button> -->
+        <!-- <b-button type="is-primary" outlined>确定</b-button> -->
+        <b-button type="is-link">确定</b-button>
       </a-col>
     </a-row>
   </div>
@@ -86,7 +110,9 @@ import { Component, Prop, Watch, Emit } from "vue-property-decorator";
 
 @Component
 export default class GuideTest extends Vue {
-
+  gender = 1;
+  brands: Array<string> = [];
+  priceRange: Array<number> = [1000, 2000]
 }
 </script>
 

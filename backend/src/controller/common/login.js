@@ -7,7 +7,6 @@ import LoginService from '../../service/LoginService.js'
 const login = new Router();
 // login.prefix("/login");
 
-
 login.post("/", async (ctx, next) => {
 	const { username, password } = ctx.request.body;
 
@@ -35,7 +34,6 @@ login.post("/", async (ctx, next) => {
 		console.error(err);
 		ctx.body = new ApiResponse(400, `登录失败: ${err.message}`);
 	}
-
 });
 
 

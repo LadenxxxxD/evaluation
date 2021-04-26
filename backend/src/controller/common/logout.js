@@ -7,7 +7,6 @@ import LoginService from '../../service/LoginService.js'
 const logout = new Router();
 // login.prefix("/login");
 
-
 logout.get("/", async (ctx, next) => {
   const { username } = ctx.request.query;
   console.log('username: ', username);
@@ -23,6 +22,7 @@ logout.get("/", async (ctx, next) => {
       path: '/',
       httpOnly: true
     });
+    ctx.redirect('/auth');
     // 返回json
     return ctx.body = new ApiResponse(0, '注销成功');
 	} catch (err) {
