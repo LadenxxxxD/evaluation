@@ -23,7 +23,7 @@
         >
           <use xlink:href="#icon-huabanfuben" />
         </svg>
-        <a-dropdown :trigger="['click']" placement="bottomRight">
+        <!-- <a-dropdown :trigger="['click']" placement="bottomRight">
           <img :src="avatorImg" class="header-avator" />
           <a-menu slot="overlay">
             <a-menu-item key="0">
@@ -34,7 +34,26 @@
               <div @click="logout">注销登录</div>
             </a-menu-item>
           </a-menu>
-        </a-dropdown>
+        </a-dropdown> -->
+        <b-dropdown
+          v-model="avatorMenu"
+          position="is-bottom-left"
+          append-to-body
+          aria-role="menu"
+        >
+          <template #trigger>
+            <img :src="avatorImg" class="header-avator" />
+          </template>
+          <b-dropdown-item value="home" aria-role="menuitem">
+            Home
+          </b-dropdown-item>
+          <b-dropdown-item value="info" aria-role="menuitem">
+            个人信息
+          </b-dropdown-item>
+          <b-dropdown-item value="logout" aria-role="menuitem">
+            退出登录
+          </b-dropdown-item>
+        </b-dropdown>
       </section>
     </div>
   </div>
@@ -54,6 +73,7 @@ import request from '@/utils/request';
 export default class Header extends Vue {
   avatorImg = 'https://pic1.zhimg.com/v2-a97b59854b5dd12e8ba2d0e32abec7c3_is.jpg';
   profileMenuVisible = false;
+  avatorMenu = 'home'
 
   async logout() {
     const response: any = await request.get(`http://localhost:3000/api/v1/logout`, { username: 'admin' });
