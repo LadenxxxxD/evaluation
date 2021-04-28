@@ -4,7 +4,10 @@
       <Header />
       <!-- <SubMenu /> -->
     </header>
-    <main :class="{ 'with-header': !$route.meta.noHeader }">
+    <main
+      id="main"
+      :class="{ 'with-header': !$route.meta.noHeader }"
+    >
       <keep-alive>
         <router-view v-if="$route.meta.keepAlive"></router-view>
       </keep-alive>
@@ -33,9 +36,6 @@ export default class App extends Vue {
 @import "@/styles";
 
 #root {
-  // font-family: Avenir, Helvetica, Arial, sans-serif;
-  // font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
-  //   "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -45,26 +45,28 @@ export default class App extends Vue {
   width: 100vw;
   height: 100vh;
   position: relative;
-  // background-color: $mainBgColor;
-  // background-image: linear-gradient(to bottom right, #f3f5fa, #c6d0e5);
   background-image: linear-gradient(to bottom right, #f3f5fa1c, #c6d0e5af),
     url("assets/bg1.png");
   background-size: cover;
-  overflow: auto;
-  // margin-left: calc(100vw - 100%);
+  overflow: hidden;
 }
 header {
   overflow: visible;
   background: #fff;
 }
 main {
-  height: 100%;
+  height: 100vh;
   margin: 0 auto;
   padding: 0;
 
   &.with-header {
-    height: calc(100% - 150px);
+    height: calc(100vh - 67px);
     padding: 20px 40px;
   }
+}
+
+#main {
+  overflow: auto;
+  position: relative;
 }
 </style>

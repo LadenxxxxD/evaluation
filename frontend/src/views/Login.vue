@@ -73,6 +73,7 @@
                   class="login-input"
                   placeholder="不要告诉别人"
                   v-model="password"
+                  @keydown.enter="login"
                 />
               </div>
               <transition name="show-form">
@@ -111,7 +112,7 @@
             </div>
           </section>
           <section class="right-show-container">
-            <img src="@/assets/svg-wine.webp" alt="svg-wine" />
+            <img src="@/assets/bg-sign-in.jpg" alt="svg-wine" />
           </section>
         </div>
       </div>
@@ -310,7 +311,7 @@ export default class Login extends Vue {
   label {
     text-align: start;
     display: inline-block;
-    width: 60px;
+    width: 64px;
   }
 
   .label {

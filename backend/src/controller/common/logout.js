@@ -9,7 +9,7 @@ const logout = new Router();
 
 logout.get("/", async (ctx, next) => {
   const { username } = ctx.request.query;
-  console.log('username: ', username);
+  // console.log('username: ', username);
 
 	try {
 		const r = await LoginService.findByUserName(username);

@@ -3,9 +3,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Antd, { message, notification, Modal, Form } from 'ant-design-vue'
-import 'ant-design-vue/dist/antd.css'
 import Buefy from 'buefy'
+import ElementUI from 'element-ui'
+import 'ant-design-vue/dist/antd.css'
 import 'buefy/dist/buefy.css'
+import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.config.productionTip = false
 
@@ -16,6 +18,7 @@ Vue.prototype.$modal = Modal
 Vue.prototype.$form = Form
 
 Vue.use(Antd);
+Vue.use(ElementUI);
 Vue.use(Buefy);
 
 new Vue({

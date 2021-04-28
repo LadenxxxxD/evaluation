@@ -22,7 +22,7 @@ const auth = {
             const payload = jwt.verify(token, config.TOKEN.secret);
             ret = false;   // 如果验证失败会throw error 不会走到这一步
         } catch (err){
-            console.log('token验证失败！'+err.message);
+            console.log('token验证失败！' + err.message);
         }
         return ret;
     }

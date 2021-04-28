@@ -50,7 +50,7 @@
           <b-dropdown-item value="info" aria-role="menuitem">
             个人信息
           </b-dropdown-item>
-          <b-dropdown-item value="logout" aria-role="menuitem">
+          <b-dropdown-item aria-role="menuitem" @click="logout">
             退出登录
           </b-dropdown-item>
         </b-dropdown>

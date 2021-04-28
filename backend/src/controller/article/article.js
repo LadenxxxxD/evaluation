@@ -5,9 +5,11 @@ import ArticleService from '../../service/ArticleService.js'
 const article = new Router();
 
 article.get("/listByPage", async (ctx, next) => {
-  const { pageNum = 0, pageSize = 10 } = ctx.query;
+  const { pageNum = '0', pageSize = '10' } = ctx.query;
+  const page = parseInt(pageNum, 10);
+  const size = parseInt(pageSize, 10);
   try {
-    const data = await ArticleService.getArticleListByPage({ pageNum, pageSize });
+    const data = await ArticleService.getArticleListByPage(page, size);
     ctx.body = new ApiResponse(0, `获取成功`, data);
   } catch (err) {
     console.error(err);

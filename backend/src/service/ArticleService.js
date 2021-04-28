@@ -2,11 +2,10 @@ import Axios from 'axios';
 import ArticleModel from '../model/ArticleModel.js';
 
 const getArticleListByPage = async (pageNum = 0, pageSize = 10) => {
-  console.log(123);
   try {
     let r = await ArticleModel.findAll({ offset: pageNum * pageSize || 0, limit: pageSize });
     if (r) {
-      console.log('找到了', r);
+      console.log('找到了', r.map((item) => item.id));
       return r;
     }
   } catch (error) {
@@ -22,7 +21,7 @@ const getArticle = async (id) => {
   try {
     let r = await ArticleModel.findOne({ where: { id } });
     if (r) {
-      console.log('找到了', r.get());
+      // console.log('找到了', r.get());
       return r.get();
     }
     // 找不到 去zaeke获取

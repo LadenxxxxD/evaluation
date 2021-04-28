@@ -28,6 +28,7 @@ export default class DivisionTitle extends Vue {
   font-weight: bold;
   color: #000000;
   border-radius: 4px;
+  z-index: 0;
 
   a {
     font-size: 12px;

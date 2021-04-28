@@ -1,6 +1,6 @@
 <template>
   <div class="guide">
-    <DivisionTitle title="最佳匹配" :show-more="false" style="width: 100%;margin-bottom: 20px;" />
+    <DivisionTitle title="最佳匹配" :show-more="false" style="width: 100%; margin-bottom: 10px;" />
     <div class="best-recommend-container card">
       <div class="best-recommend-title">根据您的偏好，认为它可能最适合您：</div>
       <div class="best-recommend-phone-name">OPPO Finx X3 Pro</div>
@@ -76,7 +76,7 @@
         </div>
       </div>
     </div>
-    <DivisionTitle title="其他推荐" style="width: 100%;margin: 40px 0 20px 0;" />
+    <DivisionTitle title="其他推荐" style="width: 100%; margin: 40px 0 10px 0;" />
     <div class="second-recommend">
       <section class="card-10-hover">
         <img src="@/assets/mobile/OnePlus-9-silver.png" />

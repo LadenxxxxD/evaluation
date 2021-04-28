@@ -86,20 +86,28 @@ export default class ArticleListItem extends Vue {
 }
 
 .author-name {
-  font-size: 1.25em;
   font-weight: 600;
+  font-size: 18px;
 }
 
 .article-list-title {
-  font-size: 20px;
+  font-size: 18px;
   color: #333;
   line-height: 36px;
-  margin: 12px 0;
+  margin: 6px 0;
+
+  &:hover {
+    color: #7957d8;
+  }
 }
 .article-list-content {
+  font-size: 14px;
   margin: 12px 0;
 }
 .article-list-info {
   flex: 1;
+}
+.time {
+  font-size: 12px;
 }
 </style>

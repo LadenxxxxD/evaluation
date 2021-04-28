@@ -36,7 +36,7 @@
         <div class="test-component">
           <!-- <a-slider :default-value="22" :tooltip-visible="true" /> -->
           <b-field>
-            <b-slider :value="22" lazy tooltip-always></b-slider>
+            <b-slider :value="22" indicator lazy :tooltip="false" tooltip-always></b-slider>
           </b-field>
         </div>
       </b-step-item>
@@ -44,12 +44,12 @@
       <b-step-item step="2" label="需求信息" :clickable="true" class="test-step-area">
         <div class="test-title-big">
           需求信息
-          <span style="font-size: 14px; font-weight: 400;">请勾选您所重视的需求项</span>
+          <span style="font-size: 14px; font-weight: 400;">请勾选您重视的需求项</span>
         </div>
         <div class="test-title">我预期购买手机的价格段</div>
         <div class="test-component">
           <!-- <a-slider range :default-value="[20, 50]" :min="600" :max="20000" /> -->
-          <b-slider v-model="priceRange" type="is-danger" :min="600" :max="10000" :step="100"></b-slider>
+          <b-slider v-model="priceRange" indicator :tooltip="false" type="is-danger" :min="600" :max="10000" :step="100"></b-slider>
         </div>
         <div class="test-title">多数时候，我更倾向使用手机</div>
         <div class="test-component">
@@ -74,7 +74,7 @@
       <b-step-item step="3" label="详细需求" :clickable="true" class="test-step-area">
         <div class="test-title-big">
           详细需求
-          <span style="font-size: 14px; font-weight: 400;">请勾选您所重视的需求项</span>
+          <span style="font-size: 14px; font-weight: 400;">请勾选您重视的需求项</span>
         </div>
         <div class="test-title">我喜欢以下颜色作为手机配色</div>
         <div class="test-component">

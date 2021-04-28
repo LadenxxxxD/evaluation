@@ -11,20 +11,23 @@
           </div>
         </div>
       </div>
-      <div class="right">
-        <div class="info short"></div>
-        <div class="info"></div>
-        <div class="info"></div>
-        <div class="info short"></div>
-        <div class="info"></div>
-        <div class="info"></div>
-        <div class="info short"></div>
-        <div class="info"></div>
-        <div class="info"></div>
-        <div class="info short"></div>
-        <div class="info"></div>
-        <div class="info"></div>
-      </div>
+        <div class="right-panel">
+          <!-- <a-affix :offset-top="120" :target="() => document.querySelector('#main')" class="right-panel"> -->
+            <section class="right-panel-controller"></section>
+          <!-- <div class="info short"></div>
+          <div class="info"></div>
+          <div class="info"></div>
+          <div class="info short"></div>
+          <div class="info"></div>
+          <div class="info"></div>
+          <div class="info short"></div>
+          <div class="info"></div>
+          <div class="info"></div>
+          <div class="info short"></div>
+          <div class="info"></div>
+          <div class="info"></div> -->
+          <!-- </a-affix> -->
+        </div>
     </div>
   </div>
   <!-- </main> -->
@@ -57,13 +60,21 @@ export default class Home extends Vue { }
   flex-direction: column;
   padding: 20px 20px 20px 0;
 }
-.right {
+.right-panel {
   display: flex;
   flex-direction: column;
   flex: 1;
-  background-color: #fff;
   margin: 20px 0;
-  padding: 30px 20px;
+  position: sticky;
+  top: 120px;
+  // width: calc(1200px - 880px);
+  // right: calc((100% - 1200px) / 2 + 10px);
+  
+  .right-panel-controller {
+    padding: 30px 20px;
+    height: 300px;
+    background-color: #fff;
+  }
 }
 .info {
   width: 100%;

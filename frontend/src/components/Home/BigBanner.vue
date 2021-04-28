@@ -1,18 +1,14 @@
 <template>
   <div class="top-bigbanner">
     <div class="top-bigbanner-main">
-      <img src="//nwzimg.wezhan.cn/contents/sitefiles2035/10175394/images/20226789.jpg" alt="1" />
+      <img :src="images[0]" alt="1" />
     </div>
     <div class="top-bigbanner-column">
-      <div class="top-bigbanner-second">
-        <img src="//nwzimg.wezhan.cn/contents/sitefiles2035/10175394/images/20226752.jpg" />
-      </div>
-      <div class="top-bigbanner-second">
-        <img src="http://pic.zaeke.com/img161527818228639.jpeg" />
-      </div>
-      <div class="top-bigbanner-second">
-        <img src="http://pic.zaeke.com/img161527821198819.jpeg" />
-      </div>
+      <template v-for="img, i in images">
+        <div class="top-bigbanner-second" v-if="i !== 0" :key="img">
+          <img :src="img" />
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -24,8 +20,17 @@ import request from "@/utils/request";
 
 @Component
 export default class BigBanner extends Vue {
+  images: Array<string> = [];
+
   mounted() {
-    request.get("http://localhost:3000/api/v1/banner");
+    this.getBanner();
+  }
+
+  async getBanner() {
+    const response: any = await request.get("http://localhost:3000/api/v1/banner");
+    console.log('response: ', response);
+    const data = response.data || [];
+    this.images = data.map((item: any) => item.url)
   }
 }
 </script>
@@ -33,6 +38,7 @@ export default class BigBanner extends Vue {
 <style lang="scss" scoped>
 .top-bigbanner {
   display: flex;
+  z-index: 0;
 
   & img {
     height: 100%;
