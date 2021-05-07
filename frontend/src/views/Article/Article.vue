@@ -10,9 +10,9 @@
       <article class="article-content" v-html="article.content"></article>
     </div>
     <div class="comment-main-container">
+      <!-- :props="commentProps" -->
       <Comment
-        :data="data"
-        :props="commentProps"
+        v-model="commentsData"
         :user="currentUser"
         :before-submit="addComment"
         :before-delete="deleteComment"
@@ -26,8 +26,8 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component, Prop, Watch, Emit } from "vue-property-decorator";
-import Comment from '@fengfengfeng/vue-juejin-comment'
-import '@fengfengfeng/vue-juejin-comment/dist/vue-juejin-comment.css'
+import Comment from 'vue-juejin-comment'
+// import 'vue-juejin-comment/dist/vue-juejin-comment.css'
 import request from '@/utils/request';
 import { formatTimestampDate } from '@/utils/util';
 
@@ -50,20 +50,79 @@ export default class Article extends Vue {
     createTime: 0
   }
 
-  commentProps = {
-    content: 'content',
-    imgSrc: 'imgSrc',
-    children: 'childrenComments',
-    likes: 'likes',
-    reply: 'reply',
-    createAt: 'createAt',
-    user: 'visitor',
-  }
+  // commentProps = {
+  //   content: 'content',
+  //   imgSrc: 'imgSrc',
+  //   children: 'childrenComments',
+  //   likes: 'likes',
+  //   reply: 'reply',
+  //   createAt: 'createAt',
+  //   user: 'visitor',
+  // }
 
-  data: Array<any> = [];
+  commentsData: Array<any> = [
+    {
+      content: '梦芸\n近况如何\n算来已有十月未见你\n甚是思念',
+      user: {
+        name: '我叫白云',
+        avatar:
+          'https://img.vim-cn.com/46/60955e1965607e5a9e9af1ba37a2c1ed99de60.png',
+      },
+      createAt: '2020.11.24',
+      likes: 1,
+      children: [
+        {
+          content:
+            '此刻我能闻见漫天火药味道\n我随军藏身长江边一暗无天日的地窖底\n埋首台灯下写这些字却不知把心绪给寄向何地',
+          user: {
+            name: 'NARUTO',
+            avatar:
+              'https://img.vim-cn.com/4d/5cbfa03caa043dcb7b3b4e75f827535538776a.jpg',
+          },
+          createAt: '2020.11.25',
+        },
+        {
+          content: '\n如磐石般坚毅',
+          user: {
+            name: '我叫黑土',
+            avatar:
+              'https://img.vim-cn.com/b7/6c70f9dc921123f8f1ab754ec938a2b04b52a7.jpg',
+          },
+          createAt: '2020.11.25',
+          reply: {
+            name: 'NARUTO',
+            avatar:
+              'https://img.vim-cn.com/4d/5cbfa03caa043dcb7b3b4e75f827535538776a.jpg',
+          },
+        },
+      ],
+    },
+    {
+      content:
+        '我想时光亦是用来磨的\n细细地磨慢慢地磨\n总能磨出些许墨香来',
+      user: {
+        name: '我叫黑土',
+        avatar:
+          'https://img.vim-cn.com/b7/6c70f9dc921123f8f1ab754ec938a2b04b52a7.jpg',
+      },
+      createAt: '2020.12.5',
+      children: [
+        {
+          content:
+            '即使我鼻子已不灵\n眼睛生出疾\n侥幸你的照片还能辨出依稀',
+          user: {
+            name: 'NARUTO',
+            avatar:
+              'https://img.vim-cn.com/4d/5cbfa03caa043dcb7b3b4e75f827535538776a.jpg',
+          },
+          createAt: '2020.12.6',
+        },
+      ],
+    },
+  ]
 
   created() {
-    this.addData(1)
+    // this.addData(1)
   }
 
   mounted() {

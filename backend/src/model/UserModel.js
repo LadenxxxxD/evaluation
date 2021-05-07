@@ -14,6 +14,9 @@ export const UserModel = sequelize.define('User', {
     },
     nickname: {
         type: DataTypes.STRING
+    },
+    avatar: {
+        type: DataTypes.STRING
     }
 }, {
     tableName: 'user',

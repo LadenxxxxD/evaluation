@@ -54,6 +54,9 @@ export const ArticleModel = sequelize.define('Article', {
   like: {
     type: DataTypes.INTEGER
   },
+  valid: {
+    type: DataTypes.BOOLEAN
+  },
   created: {
     type: DataTypes.TIME,
     get() {

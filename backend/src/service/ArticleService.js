@@ -3,12 +3,13 @@ import ArticleModel from '../model/ArticleModel.js';
 
 const getArticleListByPage = async (pageNum = 0, pageSize = 10) => {
   try {
-    let r = await ArticleModel.findAll({ offset: pageNum * pageSize || 0, limit: pageSize });
+    let r = await ArticleModel.findAll({ offset: pageNum * pageSize || 0, limit: pageSize, order: [['created', 'DESC']] });
     if (r) {
       console.log('找到了', r.map((item) => item.id));
       return r;
     }
   } catch (error) {
+    console.log('error: ', error);
 
   }
 }
@@ -47,7 +48,6 @@ const getArticle = async (id) => {
         like: 0,
         created: new Date(data.created * 1000),
         updated: new Date(data.updated * 1000),
-        tags: data.tags,
       });
       if (r) console.log('数据插入成功')
       return data;
@@ -58,7 +58,33 @@ const getArticle = async (id) => {
   }
 }
 
+const saveArticle = async (data) => {
+  try {
+    let r = await ArticleModel.create({
+      id: 0,
+      title: data.title,
+      content: data.content,
+      author: data.author.name,
+      author_id: data.author.id,
+      author_img: data.author.avatar,
+      description: data.description,
+      tags: data.userTags,
+      htmlcontent: data.content,
+      img: data.coverImg,
+      valid: false,
+      created: new Date(),
+      updated: new Date()
+    });
+    if (r) return true;
+    return false;
+  } catch (error) {
+    console.log('[service]saveArticle: ', error);
+    return error;
+  }
+}
+
 export default {
   getArticle,
-  getArticleListByPage
+  getArticleListByPage,
+  saveArticle
 }

@@ -123,8 +123,8 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component, Prop, Watch, Emit } from "vue-property-decorator";
-// import axios from "axios";
 import request from "@/utils/request";
+import { ToastProgrammatic as Toast } from 'buefy';
 import Cookies from "js-cookie";
 
 @Component({})
@@ -171,18 +171,26 @@ export default class Login extends Vue {
     );
     if (response && response.code === 200) {
       console.log('登录成功: ', response);
-      this.$router.push({
-        path: '/'
-      })
+      this.$router.push('/');
     } else {
-      this.$message.error(response && response.message);
+      Toast.open({
+        duration: 5000,
+        message: response && response.message,
+        type: 'is-danger'
+      });
+      // this.$message.error(response && response.message);
       console.log('登录失败: ', response.message);
     }
   }
 
   async register() {
     if (this.password !== this.confirmPassword) {
-      this.$message.error('两次密码不一致');
+      // this.$message.error('两次密码不一致');
+      Toast.open({
+        duration: 5000,
+        message: '两次密码不一致',
+        type: 'is-danger'
+      });
       console.log('两次密码不一致');
       return;
     }
@@ -200,7 +208,12 @@ export default class Login extends Vue {
         path: '/'
       })
     } else {
-      this.$message.error(response && response.message);
+      // this.$message.error(response && response.message);
+      Toast.open({
+        duration: 5000,
+        message: response && response.message,
+        type: 'is-danger'
+      });
     }
   }
 

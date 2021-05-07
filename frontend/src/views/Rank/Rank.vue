@@ -1,12 +1,23 @@
 <template>
-  <div class="rank-wrap">
-    <div class="rank-items">
+  <!-- <div class="rank-wrap"> -->
+  <!-- <div class="rank-items">
       <RankMini></RankMini>
-    </div>
-    <!-- <div class="rank-items"></div>
+  </div>-->
+  <SlideContainer>
+    <SlidePage>
+      <RankMini type="allSite" style="margin: 0 auto;"></RankMini>
+    </SlidePage>
+    <SlidePage>
+      <RankMini type="userRate" style="margin: 0 auto;"></RankMini>
+    </SlidePage>
+    <SlidePage>
+      <RankMini type="antutu" style="margin: 0 auto;"></RankMini>
+    </SlidePage>
+  </SlideContainer>
+  <!-- <div class="rank-items"></div>
     <div class="rank-items"></div>
-    <div class="rank-items"></div>-->
-  </div>
+  <div class="rank-items"></div>-->
+  <!-- </div> -->
 </template>
 
 
@@ -14,10 +25,13 @@
 import Vue from "vue";
 import { Component, Prop, Watch, Emit } from "vue-property-decorator";
 import RankMini from '@/components/Rank/RankMini.vue';
+import { SlideContainer, SlidePage } from 'vue-slidepage';
 
 @Component({
   components: {
-    RankMini
+    RankMini,
+    SlideContainer,
+    SlidePage
   }
 })
 export default class Rank extends Vue {
@@ -32,6 +46,7 @@ export default class Rank extends Vue {
   // justify-content: space-between;
   // flex-wrap: wrap;
   width: 700px;
+  height: 800px;
   padding: 20px 40px;
   margin: 0 auto;
 }

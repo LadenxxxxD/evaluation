@@ -2,7 +2,7 @@
   <div class="rank-mini-container">
     <div class="rank-title-container flex-middle">
       <img src="@/assets/rank/trophy.png" />
-      <div class="rank-title">全站最佳</div>
+      <div class="rank-title">{{ typeDesc }}</div>
       <img src="@/assets/rank/trophy.png" />
     </div>
     <div class="rank-mini-top">
@@ -94,7 +94,17 @@ import { Component, Prop, Watch, Emit } from "vue-property-decorator";
 
 @Component
 export default class RankMini extends Vue {
+  @Prop({ type: String })
+  type!: string;
 
+  get typeDesc() {
+    const typeMap = new Map([
+      ['allSite', '全站排行'],
+      ['userRate', '用户评分'],
+      ['antutu', '安兔兔'],
+    ]);
+    return typeMap.get(this.type);
+  }
 }
 </script>
 

@@ -1,6 +1,7 @@
 import Router from 'koa-router';
 import ApiResponse from '../../../lib/ApiResponse.js';
 import ArticleService from '../../service/ArticleService.js'
+import UserService from '../../service/UserService.js'
 
 const article = new Router();
 
@@ -27,5 +28,34 @@ article.get("/:id", async (ctx, next) => {
     ctx.body = new ApiResponse(400, `获取失败: ${err.message}`);
   }
 });
+
+article.post("/add", async (ctx, next) => {
+  const { title, content, author } = ctx.request.body;
+  const username = author;
+  try {
+    const authorObj = await UserService.findByUserName(username);
+    const author = {
+      id: authorObj.id,
+      name: authorObj.nickname,
+      avatar: authorObj.avatar
+    };
+    const params = {
+      title,
+      content,
+      author,
+      description: '',
+      userTags: [],
+      coverImg: ''
+    }
+    const result = await ArticleService.saveArticle(params);
+    if (result) {
+      ctx.body = new ApiResponse(0, `发布成功: 待管理员用户审批`);
+    } else {
+      ctx.body = new ApiResponse(0, `发布失败: ${err.message}`);
+    }
+  } catch (error) {
+    console.log('[controller]新增文章时出错: ', error);
+  }
+})
 
 export default article;

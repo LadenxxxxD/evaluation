@@ -8,10 +8,10 @@ export const sequelize = new Sequelize(DB.database, DB.user, DB.password, {
     port: DB.port,
     dialect: 'mariadb',
     dialectOptions: {
-        timezone: 'Etc/GMT+8',
+        timezone: '+08:00',
     },
     useUTC: false,
-    timezone: 'Etc/GMT+8',
+    timezone: '+08:00',
     timestamps: false,
     pool: {
         min: 1,

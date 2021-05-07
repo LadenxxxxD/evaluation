@@ -34,25 +34,14 @@
               <div @click="logout">注销登录</div>
             </a-menu-item>
           </a-menu>
-        </a-dropdown> -->
-        <b-dropdown
-          v-model="avatorMenu"
-          position="is-bottom-left"
-          append-to-body
-          aria-role="menu"
-        >
+        </a-dropdown>-->
+        <b-dropdown v-model="avatorMenu" position="is-bottom-left" append-to-body aria-role="menu">
           <template #trigger>
             <img :src="avatorImg" class="header-avator" />
           </template>
-          <b-dropdown-item value="home" aria-role="menuitem">
-            Home
-          </b-dropdown-item>
-          <b-dropdown-item value="info" aria-role="menuitem">
-            个人信息
-          </b-dropdown-item>
-          <b-dropdown-item aria-role="menuitem" @click="logout">
-            退出登录
-          </b-dropdown-item>
+          <b-dropdown-item value="home" aria-role="menuitem">Home</b-dropdown-item>
+          <b-dropdown-item value="info" aria-role="menuitem">个人信息</b-dropdown-item>
+          <b-dropdown-item aria-role="menuitem" @click="logout">退出登录</b-dropdown-item>
         </b-dropdown>
       </section>
     </div>

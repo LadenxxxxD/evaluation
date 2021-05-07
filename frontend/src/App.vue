@@ -4,10 +4,7 @@
       <Header />
       <!-- <SubMenu /> -->
     </header>
-    <main
-      id="main"
-      :class="{ 'with-header': !$route.meta.noHeader }"
-    >
+    <main id="main" :class="{ 'with-header': !$route.meta.noHeader }">
       <keep-alive>
         <router-view v-if="$route.meta.keepAlive"></router-view>
       </keep-alive>
@@ -61,7 +58,6 @@ main {
 
   &.with-header {
     height: calc(100vh - 67px);
-    padding: 20px 40px;
   }
 }
 

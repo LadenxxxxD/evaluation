@@ -8,6 +8,8 @@ import ElementUI from 'element-ui'
 import 'ant-design-vue/dist/antd.css'
 import 'buefy/dist/buefy.css'
 import 'element-ui/lib/theme-chalk/index.css'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
 Vue.config.productionTip = false
 
@@ -17,9 +19,10 @@ Vue.prototype.$notification = notification
 Vue.prototype.$modal = Modal
 Vue.prototype.$form = Form
 
-Vue.use(Antd);
-Vue.use(ElementUI);
-Vue.use(Buefy);
+Vue.use(Antd)
+Vue.use(ElementUI)
+Vue.use(Buefy)
+Vue.use(mavonEditor)
 
 new Vue({
   router,

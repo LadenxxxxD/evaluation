@@ -2,8 +2,8 @@
   <div>
     <ArticleListItem v-for="articleItem in articleList" :key="articleItem.id" :data="articleItem" />
     <div class="loadmore-container" @click="getNextPageArticleList">加载更多...</div>
-    <p v-if="loading">加载中...</p>
-    <p v-if="noMore">没有更多了</p>
+    <!-- <p v-if="loading">加载中...</p>
+    <p v-if="noMore">没有更多了</p>-->
   </div>
 </template>
 
@@ -27,11 +27,11 @@ export default class ArticleList extends Vue {
   mounted() {
     this.getArticleList();
   }
-  
+
   async getArticleList() {
     const response: any = await request.get(
       `http://localhost:3000/api/v1/article/listByPage`,
-      { 
+      {
         pageNum: this.currentPage,
         pageSize: 10
       }
@@ -54,7 +54,7 @@ export default class ArticleList extends Vue {
     this.currentPage = this.currentPage + 1;
     const response: any = await request.get(
       `http://localhost:3000/api/v1/article/listByPage`,
-      { 
+      {
         pageNum: this.currentPage,
         pageSize: 10
       }
@@ -70,17 +70,17 @@ export default class ArticleList extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  .loadmore-container {
-    margin: 20px 0;
-    height: 60px;
-    line-height: 60px;
-    text-align: center;
-    border-radius: 10px;
-    background-color: #fff;
-    cursor: pointer;
+.loadmore-container {
+  margin: 20px 0;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: #fff;
+  cursor: pointer;
 
-    &:hover {
-      color: #7957d8;
-    }
+  &:hover {
+    color: #7957d8;
   }
+}
 </style>
