@@ -55,18 +55,18 @@
               <IconFont icon="bianxie" :size="36" />
               <span style="font-size: 12px;">写评测</span>
             </a>
-            <div class="flex-column flex-middle">
+            <a href="/evaluation" class="flex-column flex-middle" style="color: #2c3e50;">
               <IconFont icon="chakan1" :size="36" />
               <span style="font-size: 12px;">看评测</span>
-            </div>
-            <div class="flex-column flex-middle">
+            </a>
+            <a href="/rank" class="flex-column flex-middle" style="color: #2c3e50;">
               <IconFont icon="jiangbei" :size="36" />
               <span style="font-size: 12px;">看排名</span>
-            </div>
-            <div class="flex-column flex-middle">
+            </a>
+            <a href="/guide" class="flex-column flex-middle" style="color: #2c3e50;">
               <IconFont icon="aixin" :size="36" />
               <span style="font-size: 12px;">获取推荐</span>
-            </div>
+            </a>
           </div>
         </section>
         <section>

@@ -1,6 +1,6 @@
 <template>
   <div class="eva-main-container">
-    <router-link to="/rank/mobile">查看安兔兔排行</router-link>
+    <!-- <router-link to="/rank/mobile">查看安兔兔排行</router-link> -->
     <a href="/evaluation/details/123">
       <section class="card-10-hover">
         <img

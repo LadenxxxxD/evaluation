@@ -7,6 +7,7 @@ import user from '../api/user.js';
 // import register from '../api/register.js';
 import register from './controller/common/register.js';
 import article from './controller/article/article.js';
+import rank from './controller/rank/rank.js';
 import banner from '../api/Home/banner.js';
 
 
@@ -21,6 +22,7 @@ router.use("/user", user.routes(), user.allowedMethods());
 router.use("/register", register.routes(), register.allowedMethods());
 router.use("/banner", banner.routes(), register.allowedMethods());
 router.use("/article", article.routes(), article.allowedMethods());
+router.use("/rank", rank.routes(), rank.allowedMethods());
 
 
 export default router;

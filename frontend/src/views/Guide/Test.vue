@@ -131,8 +131,8 @@
 
 
     <div style="margin: 40px auto; width: 200px; display: flex; justify-content: space-between;">
-        <b-button type="is-link" outlined>取消</b-button>
-        <b-button type="is-link">提交</b-button>
+        <b-button type="is-link" outlined @click="goGuide">取消</b-button>
+        <b-button type="is-link" @click="goGuide">提交</b-button>
     </div>
   </div>
 </template>
@@ -146,7 +146,11 @@ export default class GuideTest extends Vue {
   activeStep = '2';
   gender = 1;
   brands: Array<string> = [];
-  priceRange: Array<number> = [1000, 2000]
+  priceRange: Array<number> = [1000, 2000];
+
+  goGuide() {
+    this.$router.push('/');
+  }
 }
 </script>
 

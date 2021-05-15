@@ -17,10 +17,10 @@ rank.get("/", async (ctx, next) => {
 			return ctx.body = new ApiResponse(400, `获取排名失败: 排行类型为${type}`);
 		}
     // 返回json
-    return ctx.body = new ApiResponse(0, '注销成功', r.get());
+    return ctx.body = new ApiResponse(0, '获取排名成功', r);
 	} catch (err) {
 		console.error(err);
-		ctx.body = new ApiResponse(400, `登录失败: ${err.message}`);
+		ctx.body = new ApiResponse(400, `获取排名失败: ${err.message}`);
 	}
 });
 

@@ -9,7 +9,7 @@ const routes: Array<RouteConfig> = [
     path: '/',
     name: 'Home',
     meta: {
-      keepAlive: true
+      // keepAlive: true
     },
     component: () => import(/* webpackChunkName: "about" */ '@/views/Home/Home.vue')
   },
@@ -58,7 +58,7 @@ const routes: Array<RouteConfig> = [
     name: 'login',
     meta: {
       noHeader: true,
-      keepAlive: true
+      // keepAlive: true
     },
     component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue')
   },

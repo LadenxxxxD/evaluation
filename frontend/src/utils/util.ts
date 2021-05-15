@@ -17,3 +17,11 @@ export const formatTimestampSecond = (timestamp: string | number, fix: string = 
   }
   return moment(timestamp).format(`YYYY${fix}MM${fix}DD hh${fix}mm${fix}ss`)
 }
+
+export const uuid = (): string => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.random() * 16 | 0;
+    const v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  })
+}

@@ -5,5 +5,6 @@ declare module 'vue/types/vue' {
     $message: any;
     $Modal: any;
     $notification: any;
+    $toast: any;
   }
 }

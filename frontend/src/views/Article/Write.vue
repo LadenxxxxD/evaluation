@@ -1,26 +1,110 @@
 <template>
-  <div style="width: 1200px; margin: 0 auto;">
+  <div style="width: 1200px; margin: 0 auto">
     <div class="article-title-container">
-      <b-input v-model="title" placeholder="请输入标题" style="flex: 1;"></b-input>
-      <b-button type="is-primary" style="margin-left: 20px;" @click="submit">提交审核</b-button>
+      <b-input
+        v-model="title"
+        placeholder="请输入标题"
+        style="flex: 1"
+      ></b-input>
+      <b-button
+        type="is-primary"
+        style="margin-left: 20px"
+        @click="onDrawerOpen"
+      >
+        提交审核
+      </b-button>
     </div>
-    <mavon-editor v-model="value" style="height: calc(100vh - 200px);" @change="onEditorChange" />
+    <mavon-editor
+      v-model="value"
+      style="height: calc(100vh - 200px); z-index: 2;"
+      @change="onEditorChange"
+    />
+    <a-drawer
+      title="提交审核"
+      width="400px"
+      placement="right"
+      :closable="true"
+      :visible="drawerVisible"
+      @close="onDrawerClose"
+    >
+      <b-field label="关联手机">
+        <a-select
+          mode="multiple"
+          size="large"
+          :default-value="[123, 124]"
+          style="width: 100%"
+          placeholder="Please select"
+        >
+          <a-select-option :key="123">小米11Pro</a-select-option>
+          <a-select-option :key="124">一加7Pro</a-select-option>
+        </a-select>
+      </b-field>
+      <b-field label="文章摘要">
+        <b-input maxlength="80" type="textarea"></b-input>
+      </b-field>
+      <!-- <section style="margin-bottom: 20px;">
+        <p class="option-title">文章摘要</p>
+      </section> -->
+      <b-field label="用户标签">
+        <div style="width: 100%;">
+          <b-tag
+            v-for="tag in userTags"
+            :key="tag.key"
+            type="is-success"
+            closable
+            closeType='is-danger'
+            aria-close-label="Close tag"
+            @close="deleteTag(tag.key)"
+          >
+            {{ tag.key }}
+          </b-tag>
+        </div>
+      </b-field>
+      <div class="tag-add-wrapper">
+        <b-input v-model="currentAddTag" style="flex: 1; margin-right: 10px;"></b-input>
+        <b-button>添加</b-button>
+      </div>
+    </a-drawer>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import { Component, Prop, Watch, Emit } from "vue-property-decorator";
-import request from '@/utils/request';
+import request from "@/utils/request";
+// import { v4 as UUID } from 'uuid';
+import { uuid } from '@/utils/util';
 
 @Component
 export default class WriteArticle extends Vue {
-  title: string = '';
-  value: string = '';
-  htmlValue: string = '';
+  title: string = "";
+  value: string = "";
+  htmlValue: string = "";
+  drawerVisible: boolean = false;
+  currentAddTag: string = '';
+  userTags: Array<any> = [
+    { key: uuid(), value: '123123' },
+    { key: uuid(), value: '124124' },
+    { key: uuid(), value: '125125' },
+    { key: uuid(), value: '126126' },
+    { key: uuid(), value: '127127' },
+  ];
 
   onEditorChange(value: string, html: string) {
     this.htmlValue = html;
+  }
+
+  onDrawerOpen() {
+    this.drawerVisible = true;
+  }
+
+  onDrawerClose() {
+    this.drawerVisible = false;
+  }
+
+  deleteTag(key: string): void {
+    this.userTags = this.userTags.filter((tag: any) => tag.key !== key);
+    console.log('this.userTags: ', this.userTags);
   }
 
   async submit() {
@@ -28,11 +112,27 @@ export default class WriteArticle extends Vue {
     const response: any = await request.post(
       `http://localhost:3000/api/v1/article/add`,
       {
-        author: 'admin',
+        author: "admin",
         title: this.title,
-        content: this.htmlValue
+        content: this.htmlValue,
       }
     );
+    if (response.code === 0) {
+      this.$toast.open({
+        type: "is-success",
+        duration: 5000,
+        message: "发布成功，请耐心等待审核通过",
+      });
+      setTimeout(() => {
+        this.$router.push("/");
+      }, 2000);
+    } else {
+      this.$toast.open({
+        type: "is-danger",
+        duration: 5000,
+        message: `发布失败: ${response.message}`,
+      });
+    }
   }
 }
 </script>
@@ -41,5 +141,13 @@ export default class WriteArticle extends Vue {
 .article-title-container {
   display: flex;
   margin: 10px 0;
+}
+.option-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 10px;
+}
+.tag-add-wrapper {
+  display: flex;
 }
 </style>

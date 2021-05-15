@@ -9,37 +9,19 @@
       </section>
       <Navbar></Navbar>
       <section class="user-wrapper flex-center-v">
-        <svg
-          class="iconfont login-title-logo"
-          aria-hidden="true"
-          style="font-size: 28px; margin-right: 20px;"
-        >
-          <use xlink:href="#icon-bianxie" />
-        </svg>
-        <svg
-          class="iconfont login-title-logo"
-          aria-hidden="true"
-          style="font-size: 28px; margin-right: 20px;"
-        >
-          <use xlink:href="#icon-huabanfuben" />
-        </svg>
-        <!-- <a-dropdown :trigger="['click']" placement="bottomRight">
-          <img :src="avatorImg" class="header-avator" />
-          <a-menu slot="overlay">
-            <a-menu-item key="0">
-              <a href="#">个人信息</a>
-            </a-menu-item>
-            <a-menu-divider />
-            <a-menu-item key="3">
-              <div @click="logout">注销登录</div>
-            </a-menu-item>
-          </a-menu>
-        </a-dropdown>-->
+        <a href="/article/write">
+          <IconFont
+            icon="bianxie"
+            :size="28"
+            style="margin-right: 20px; cursor: pointer;"
+          ></IconFont>
+        </a >
+        <IconFont icon="huabanfuben" :size="28" style="margin-right: 20px;"></IconFont>
         <b-dropdown v-model="avatorMenu" position="is-bottom-left" append-to-body aria-role="menu">
           <template #trigger>
             <img :src="avatorImg" class="header-avator" />
           </template>
-          <b-dropdown-item value="home" aria-role="menuitem">Home</b-dropdown-item>
+          <!-- <b-dropdown-item value="home" aria-role="menuitem">Home</b-dropdown-item> -->
           <b-dropdown-item value="info" aria-role="menuitem">个人信息</b-dropdown-item>
           <b-dropdown-item aria-role="menuitem" @click="logout">退出登录</b-dropdown-item>
         </b-dropdown>
@@ -52,11 +34,13 @@
 import Vue from "vue";
 import { Component, Prop, Watch, Emit } from "vue-property-decorator";
 import Navbar from "@/components/NavBar.vue";
+import IconFont from '@/components/IconFont.vue';
 import request from '@/utils/request';
 
 @Component({
   components: {
-    Navbar
+    Navbar,
+    IconFont
   }
 })
 export default class Header extends Vue {

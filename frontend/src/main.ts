@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Antd, { message, notification, Modal, Form } from 'ant-design-vue'
-import Buefy from 'buefy'
+import Buefy, { ToastProgrammatic as Toast } from 'buefy'
 import ElementUI from 'element-ui'
 import 'ant-design-vue/dist/antd.css'
 import 'buefy/dist/buefy.css'
@@ -18,6 +18,7 @@ Vue.prototype.$message = message
 Vue.prototype.$notification = notification
 Vue.prototype.$modal = Modal
 Vue.prototype.$form = Form
+Vue.prototype.$toast = Toast
 
 Vue.use(Antd)
 Vue.use(ElementUI)

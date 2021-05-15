@@ -25,19 +25,6 @@
                 >
                   <span v-for="text in rotateText" :key="text" class="text-rotate-item">{{ text }}</span>
                 </transition-group>
-                <!-- <div style="display: inline-flex; flex-direction: column;">
-                  <transition
-                    name="text-rotate"
-                    tag="div"
-                    style="display: inline-flex; flex-direction: column;"
-                  >
-                    <span
-                      v-if="rotateText !== ''"
-                      :key="rotateText"
-                      class="text-rotate-item"
-                    >{{ rotateText }}</span>
-                  </transition>
-                </div>-->
               </div>
             </div>
             <div class="login-input-box">
@@ -125,7 +112,6 @@ import Vue from "vue";
 import { Component, Prop, Watch, Emit } from "vue-property-decorator";
 import request from "@/utils/request";
 import { ToastProgrammatic as Toast } from 'buefy';
-import Cookies from "js-cookie";
 
 @Component({})
 export default class Login extends Vue {

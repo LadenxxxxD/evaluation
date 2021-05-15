@@ -38,4 +38,4 @@ export const RankModel = sequelize.define('Rank', {
   timestamps: false
 });
 
-export default ArticleModel;
+export default RankModel;
