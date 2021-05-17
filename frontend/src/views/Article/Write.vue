@@ -54,15 +54,20 @@
             closable
             closeType='is-danger'
             aria-close-label="Close tag"
+            style="margin: 2px;"
             @close="deleteTag(tag.key)"
           >
-            {{ tag.key }}
+            {{ tag.value }}
           </b-tag>
         </div>
       </b-field>
       <div class="tag-add-wrapper">
         <b-input v-model="currentAddTag" style="flex: 1; margin-right: 10px;"></b-input>
-        <b-button>添加</b-button>
+        <b-button type="is-info is-light" @click="addTag">添加</b-button>
+      </div>
+      <div style="margin-top: 50px; display: flex; flex-direction: row-reverse;">
+        <b-button type="is-primary" @click="submit">提交审核</b-button>
+        <b-button style="margin-right: 20px;" @click="cancel">取消</b-button>
       </div>
     </a-drawer>
   </div>
@@ -82,13 +87,7 @@ export default class WriteArticle extends Vue {
   htmlValue: string = "";
   drawerVisible: boolean = false;
   currentAddTag: string = '';
-  userTags: Array<any> = [
-    { key: uuid(), value: '123123' },
-    { key: uuid(), value: '124124' },
-    { key: uuid(), value: '125125' },
-    { key: uuid(), value: '126126' },
-    { key: uuid(), value: '127127' },
-  ];
+  userTags: Array<any> = [];
 
   onEditorChange(value: string, html: string) {
     this.htmlValue = html;
@@ -105,6 +104,15 @@ export default class WriteArticle extends Vue {
   deleteTag(key: string): void {
     this.userTags = this.userTags.filter((tag: any) => tag.key !== key);
     console.log('this.userTags: ', this.userTags);
+  }
+
+  addTag() {
+    if (!this.currentAddTag) return;
+    this.userTags.push({
+      key: uuid(),
+      value: this.currentAddTag
+    });
+    this.currentAddTag = '';
   }
 
   async submit() {
@@ -133,6 +141,10 @@ export default class WriteArticle extends Vue {
         message: `发布失败: ${response.message}`,
       });
     }
+  }
+
+  cancel() {
+    this.$router.push('/');
   }
 }
 </script>
