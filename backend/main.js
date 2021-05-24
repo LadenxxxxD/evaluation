@@ -2,6 +2,7 @@ import Koa from 'koa';
 import bodyparser from 'koa-bodyparser';
 import router from './src/routes.js';
 import koajwt from 'koa-jwt';
+import koaBody from 'koa-body';
 import config from "./config.js";
 import cors from '@koa/cors';
 import error401Handle from './middlewares/error401Handler.js';
@@ -18,7 +19,8 @@ app.use(
 		credentials: true,
 	})
 );
-app.use(bodyparser());
+// app.use(bodyparser());
+app.use(koaBody({ multipart: true }));
 
 // 对401进行处理 必须放在koa-jwt前面
 app.use(error401Handle);
@@ -29,7 +31,7 @@ app.use(
 		secret: config.TOKEN.secret,
 		// isRevoked: auth.verify
 	}).unless({
-		path: [/\/login/, /\/register/]
+		path: [/\/login/, /\/register/, /\/upload/]
 	})
 );
 

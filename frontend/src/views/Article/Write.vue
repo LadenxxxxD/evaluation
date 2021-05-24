@@ -116,7 +116,15 @@ export default class WriteArticle extends Vue {
   }
 
   async submit() {
-    console.log(this.htmlValue);
+    // console.log(this.htmlValue);
+    if (!this.title || !this.htmlValue)  {
+      this.$toast.open({
+        type: "is-danger",
+        duration: 5000,
+        message: `发布失败: 标题和正文不能为空`,
+      });
+      return;
+    }
     const response: any = await request.post(
       `http://localhost:3000/api/v1/article/add`,
       {

@@ -30,10 +30,12 @@ export const ArticleModel = sequelize.define('Article', {
   tags: {
     type: DataTypes.STRING,
     get() {
-      return this.getDataValue('tags').split(',');
+      const tagString = this.getDataValue('tags');
+      if (!tagString) return [];
+      return tagString.split(',');
     },
     set(value) {
-      return this.setDataValue('tags', value.join(','))
+      return this.setDataValue('tags', value && value.join(','))
     }
   },
   content: {

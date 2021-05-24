@@ -1,9 +1,7 @@
 <template>
   <nav>
     <router-link v-for="item in list" :key="item.id" :to="item.link">
-      {{
-        item.value
-      }}
+      {{ item.value }}
     </router-link>
   </nav>
 </template>

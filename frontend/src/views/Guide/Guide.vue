@@ -62,17 +62,6 @@
             class="phone-pic"
             src="https://image.oppo.com/content/dam/oppo/product-asset-library/find-x3-series/cn-find-x3-pro/v2/specs/assets/fussi_cn_1920.png"
           />
-          <!-- <video
-            class="video"
-            src="//image.oppo.com/content/dam/oppo/product-asset-library/find-x3-series/cn-find-x3-pro/v2/assets/home.mp4"
-            preload="metadata"
-            playsinline
-            webkit-playsinline
-            muted
-            autoplay
-            type="video/mp4"
-            style="opacity: 1; transform: translate(0px, 0px);"
-          ></video>-->
         </div>
       </div>
     </div>

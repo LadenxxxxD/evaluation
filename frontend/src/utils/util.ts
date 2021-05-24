@@ -15,7 +15,7 @@ export const formatTimestampSecond = (timestamp: string | number, fix: string = 
   if (timestampNumber < 9999999999) {
     timestampNumber *= 1000; // 秒时间戳转毫秒时间戳
   }
-  return moment(timestamp).format(`YYYY${fix}MM${fix}DD hh${fix}mm${fix}ss`)
+  return moment(timestamp).format(`YYYY${fix}MM${fix}DD hh:mm:ss`)
 }
 
 export const uuid = (): string => {

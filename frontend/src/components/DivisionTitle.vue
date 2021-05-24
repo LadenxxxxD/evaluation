@@ -1,7 +1,7 @@
 <template>
   <div class="division-title space-between">
     <span>{{ title }}</span>
-    <a v-if="showMore" href="#">查看更多</a>
+    <a v-if="showMore" @click="onMoreClick">{{ moreText }}</a>
   </div>
 </template>
 
@@ -15,6 +15,12 @@ export default class DivisionTitle extends Vue {
   title!: string;
   @Prop({ type: Boolean, default: true })
   showMore!: boolean;
+  @Prop({ type: String, default: '查看更多' })
+  moreText!: string;
+
+  onMoreClick() {
+    this.$emit('moreClick');
+  }
 };
 </script>
 

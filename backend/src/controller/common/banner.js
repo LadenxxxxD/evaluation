@@ -1,7 +1,7 @@
 import Router from 'koa-router';
-import mysql from '../../lib/mysql.js';
-import ApiResponse from '../../lib/ApiResponse.js';
-import config from '../../config.js';
+import mysql from '../../../lib/mysql.js';
+import ApiResponse from '../../../lib/ApiResponse.js';
+import config from '../../../config.js';
 
 const banner = new Router();
 

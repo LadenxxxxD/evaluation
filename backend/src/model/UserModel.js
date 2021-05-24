@@ -1,4 +1,4 @@
-import { sequelize, DataTypes, testConnection } from '../../lib/sequelize.js';
+import { sequelize, DataTypes } from '../../lib/sequelize.js';
 
 
 /**
@@ -17,27 +17,16 @@ export const UserModel = sequelize.define('User', {
     },
     avatar: {
         type: DataTypes.STRING
-    }
+    },
+    gender: {
+        type: DataTypes.DECIMAL
+    },
+    age: {
+        type: DataTypes.INTEGER
+    },
 }, {
     tableName: 'user',
     timestamps: false
 });
 
-// testConnection(sequelize);
-
 export default UserModel;
-
-/* (async function() {
-
-    // let u = User.build({
-    //     username: 'abc',
-    //     password: 'sjdf'
-    // });
-
-    // u = await u.save();
-
-    let u = await UserModel.create({
-        username: 'abcd',
-        password: 'sjdf'
-    })
-})(); */

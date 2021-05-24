@@ -106,4 +106,20 @@ export const post = (url: string, data: any, config = {}) => {
   })
 }
 
-export default { get, post }
+/* 统一封装delete请求  */
+export const del = (url: string, data: any, config = {}) => {
+  return new Promise((resolve, reject) => {
+    instance({
+      method: 'delete',
+      url,
+      data,
+      ...config
+    }).then(response => {
+      resolve(response)
+    }).catch(error => {
+      reject(error)
+    })
+  })
+}
+
+export default { get, post, del }

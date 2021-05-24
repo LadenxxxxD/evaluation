@@ -5,6 +5,58 @@ import UserService from '../../service/UserService.js'
 
 const article = new Router();
 
+article.get("/all", async (ctx, next) => {
+  try {
+    const data = await ArticleService.getArticleAll();
+    ctx.body = new ApiResponse(0, `获取成功`, data);
+  } catch (err) {
+    console.error(err);
+    ctx.body = new ApiResponse(400, `获取失败: ${err.message}`);
+  }
+});
+
+article.get("/find", async (ctx, next) => {
+  const { ids } = ctx.query;
+  console.log("🚀 ~ file: article.js ~ line 20 ~ article.get ~ ids", ids)
+  try {
+    const data = await ArticleService.getArticleAll();
+    ctx.body = new ApiResponse(0, `获取成功`, data);
+  } catch (err) {
+    console.error(err);
+    ctx.body = new ApiResponse(400, `获取失败: ${err.message}`);
+  }
+});
+
+article.get("/invalid", async (ctx, next) => {
+  try {
+    const data = await ArticleService.getInvalidArticleList();
+    ctx.body = new ApiResponse(0, `获取成功`, data);
+  } catch (err) {
+    console.error(err);
+    ctx.body = new ApiResponse(400, `获取失败: ${err.message}`);
+  }
+});
+
+article.get("/invalidCount", async (ctx, next) => {
+  try {
+    const count = await ArticleService.getInvalidArticleCount();
+    ctx.body = new ApiResponse(0, `获取成功`, count);
+  } catch (err) {
+    console.error(err);
+    ctx.body = new ApiResponse(400, `获取失败: ${err.message}`);
+  }
+});
+
+article.get("/comment", async (ctx, next) => {
+  try {
+    const count = await ArticleService.getArticleCommentAll();
+    ctx.body = new ApiResponse(0, `获取成功`, count);
+  } catch (err) {
+    console.error(err);
+    ctx.body = new ApiResponse(400, `获取文章评论失败: ${err.message}`);
+  }
+});
+
 article.get("/listByPage", async (ctx, next) => {
   const { pageNum = '0', pageSize = '10' } = ctx.query;
   const page = parseInt(pageNum, 10);
@@ -26,6 +78,18 @@ article.get("/:id", async (ctx, next) => {
   } catch (err) {
     console.error(err);
     ctx.body = new ApiResponse(400, `获取失败: ${err.message}`);
+  }
+});
+
+
+article.post("/pass", async (ctx, next) => {
+  const { id } = ctx.request.body;
+  try {
+    const data = await ArticleService.passArticle(id);
+    ctx.body = new ApiResponse(0, `发表成功`, data);
+  } catch (err) {
+    console.error(err);
+    ctx.body = new ApiResponse(400, `发表失败: ${err.message}`);
   }
 });
 
@@ -56,6 +120,17 @@ article.post("/add", async (ctx, next) => {
   } catch (error) {
     console.log('[controller]新增文章时出错: ', error);
   }
-})
+});
+
+article.post("/comment", async (ctx, next) => {
+  const { id, user, content } = ctx.request.body;
+  try {
+    const data = await ArticleService.addComment(id, user, content);
+    ctx.body = new ApiResponse(0, `发表成功`, data);
+  } catch (err) {
+    console.error(err);
+    ctx.body = new ApiResponse(400, `发表失败: ${err.message}`);
+  }
+});
 
 export default article;

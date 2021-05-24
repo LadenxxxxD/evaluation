@@ -21,8 +21,12 @@
           <template #trigger>
             <img :src="avatorImg" class="header-avator" />
           </template>
-          <!-- <b-dropdown-item value="home" aria-role="menuitem">Home</b-dropdown-item> -->
-          <b-dropdown-item value="info" aria-role="menuitem">个人信息</b-dropdown-item>
+          <b-dropdown-item aria-role="menuitem" @click="toUserInfo">个人中心</b-dropdown-item>
+          <b-dropdown-item aria-role="menuitem" @click="toAdmin">平台管理</b-dropdown-item>
+          <b-dropdown-item aria-role="menuitem" @click="toAudit" style="padding-right: 1rem;">
+            <span>待我审核</span>
+            <a-badge v-show="auditCount !== 0" :count="auditCount" style="float: right;" />
+          </b-dropdown-item>
           <b-dropdown-item aria-role="menuitem" @click="logout">退出登录</b-dropdown-item>
         </b-dropdown>
       </section>
@@ -46,13 +50,37 @@ import request from '@/utils/request';
 export default class Header extends Vue {
   avatorImg = 'https://pic1.zhimg.com/v2-a97b59854b5dd12e8ba2d0e32abec7c3_is.jpg';
   profileMenuVisible = false;
-  avatorMenu = 'home'
+  avatorMenu = 'home';
+  auditCount = 0;
+
+  mounted() {
+    this.getAuditCount();
+  }
 
   async logout() {
     const response: any = await request.get(`http://localhost:3000/api/v1/logout`, { username: 'admin' });
     if (response.code === 0) {
       location.reload();
     }
+  }
+
+  async getAuditCount() {
+    const response: any = await request.get(`http://localhost:3000/api/v1/article/invalidCount`);
+    if (response.code === 0) {
+      this.auditCount = response.data;
+    }
+  }
+
+  toUserInfo() {
+    this.$router.push('/user')
+  }
+
+  toAdmin() {
+    this.$router.push('/admin')
+  }
+
+  toAudit() {
+    this.$router.push('/admin/audit')
   }
 }
 </script>

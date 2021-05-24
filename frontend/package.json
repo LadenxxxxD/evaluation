@@ -35,7 +35,6 @@
     "node-sass": "^4.14.1",
     "sass-loader": "^8.0.2",
     "typescript": "^3.9.9",
-    "vue-juejin-comment": "^0.1.2",
     "vue-template-compiler": "^2.6.12"
   }
 }

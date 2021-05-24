@@ -49,9 +49,19 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "rank" */ '@/views/Rank/Rank.vue')
   },
   {
-    path: '/rank/mobile',
-    name: 'MobileRank',
-    component: () => import(/* webpackChunkName: "mobileRank" */ '@/views/Rank/Mobile.vue')
+    path: '/user',
+    name: 'UserInfo',
+    component: () => import(/* webpackChunkName: "userinfo" */ '@/views/Home/User.vue')
+  },
+  {
+    path: '/admin',
+    name: 'UserInfo',
+    component: () => import(/* webpackChunkName: "admin" */ '@/views/Admin/Admin.vue')
+  },
+  {
+    path: '/admin/audit',
+    name: 'UserInfo',
+    component: () => import(/* webpackChunkName: "audit" */ '@/views/Admin/Audit.vue')
   },
   {
     path: '/login',

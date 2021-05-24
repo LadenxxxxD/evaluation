@@ -1,16 +1,72 @@
 import Axios from 'axios';
 import ArticleModel from '../model/ArticleModel.js';
+import CommentModel from '../model/CommentModel.js';
+import { Op } from '../../lib/sequelize.js';
 
-const getArticleListByPage = async (pageNum = 0, pageSize = 10) => {
+
+const getArticleAll = async () => {
   try {
-    let r = await ArticleModel.findAll({ offset: pageNum * pageSize || 0, limit: pageSize, order: [['created', 'DESC']] });
+    let r = await ArticleModel.findAll({ order: [['created', 'DESC']] });
     if (r) {
-      console.log('找到了', r.map((item) => item.id));
       return r;
     }
   } catch (error) {
     console.log('error: ', error);
+  }
+}
 
+// 查找不合法或未审核的文章
+const getInvalidArticleList = async () => {
+  try {
+    let r = await ArticleModel.findAll({
+      where: {
+        valid: {
+          [Op.ne]: 1
+        }
+      },
+      order: [['created', 'DESC']]
+    });
+    if (r) {
+      return r;
+    }
+  } catch (error) {
+    console.log('error: ', error);
+  }
+}
+
+// 查找待审核文章数量
+const getInvalidArticleCount = async () => {
+  try {
+    let count = ArticleModel.count({
+      where: {
+        valid: {
+          [Op.ne]: 1
+        }
+      },
+    });
+    return count;
+  } catch (error) {
+    console.log('查找待审核文章数量时: ', error);
+  }
+}
+
+const getArticleListByPage = async (pageNum = 0, pageSize = 10) => {
+  try {
+    let r = await ArticleModel.findAll({
+      where: {
+        valid: {
+          [Op.eq]: 1
+        }
+      },
+      offset: pageNum * pageSize || 0,
+      limit: pageSize,
+      order: [['created', 'DESC']]
+    });
+    if (r) {
+      return r;
+    }
+  } catch (error) {
+    console.log('error: ', error);
   }
 }
 
@@ -58,6 +114,17 @@ const getArticle = async (id) => {
   }
 }
 
+const passArticle = async (id) => {
+  console.log(id);
+  try {
+    let r = await ArticleModel.update({ valid: 1 }, { where: { id } });
+    console.log(r);
+    return !!r;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 const saveArticle = async (data) => {
   try {
     let r = await ArticleModel.create({
@@ -83,8 +150,38 @@ const saveArticle = async (data) => {
   }
 }
 
+const getArticleCommentAll = async () => {
+  try {
+    return await CommentModel.findAll({
+      where: { type: 'article' }
+    });
+  } catch (error) {
+    console.log('获取产品评论时出错: ', error);
+  }
+}
+
+const addComment = async (id, user, content) => {
+  try {
+    return await CommentModel.create({
+      refId: id,
+      userId: user,
+      content,
+      type: 'article',
+      createAt: new Date()
+    });
+  } catch (error) {
+    console.log('发表文章评论时出错: ', error);
+  }
+}
+
 export default {
   getArticle,
   getArticleListByPage,
-  saveArticle
+  getInvalidArticleList,
+  getInvalidArticleCount,
+  getArticleAll,
+  saveArticle,
+  passArticle,
+  getArticleCommentAll,
+  addComment
 }

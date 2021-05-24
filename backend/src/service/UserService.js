@@ -10,6 +10,32 @@ const findByUserName = async (username) => {
   return null;
 }
 
+const getUserInfo = async (id) => {
+  try {
+    return await UserModel.findByPk(id, { attributes: { exclude: ['password'] } });
+  } catch (error) {
+    console.log('用户信息ById出错: ', error)
+  }
+}
+
+const updateUserInfo = async (id, params) => {
+  try {
+    return await UserModel.update({
+      nickname: params.nickname,
+      avatar: params.avatar,
+      age: params.age,
+      gender: params.gender,
+      sign: params.sign
+    }, {
+      where: { id }
+    });
+  } catch (error) {
+    console.log('用户信息ById出错: ', error)
+  }
+}
+
 export default {
-  findByUserName
+  findByUserName,
+  getUserInfo,
+  updateUserInfo
 }

@@ -41,6 +41,7 @@ export default class ArticleList extends Vue {
     if (response.code === 0) {
       this.loading = false;
       this.articleList = response.data;
+      console.log("🚀 ~ articleList", this.articleList)
     } else {
       this.loading = false;
     }

@@ -24,6 +24,14 @@ export const sequelize = new Sequelize(DB.database, DB.user, DB.password, {
 // 数据库类型枚举
 export const { DataTypes } = Sequelize;
 
+// Sequelize操作符
+export const { Op } = Sequelize;
+
+// sequelize聚合函数
+export const { fn } = Sequelize;
+
+// sequelize对象
+
 // 测试连接是否成功
 export const testConnection = sequelize => {
     sequelize
@@ -39,5 +47,7 @@ export const testConnection = sequelize => {
 export default {
     sequelize,
     DataTypes,
+    Op,
+    fn,
     testConnection
 };
