@@ -58,11 +58,11 @@
         <div class="test-title">该手机将作为我的</div>
         <div class="test-component">
           <a-radio-group default-value="a">
-            <b-radio v-model="formData.scenery" :native-value="3"> 主力机/长期使用 </b-radio>
-            <b-radio v-model="formData.scenery" :native-value="2"> 过渡机 </b-radio>
-            <b-radio v-model="formData.scenery" :native-value="1"> 老年机 </b-radio>
-            <b-radio v-model="formData.scenery" :native-value="1"> 学生机 </b-radio>
-            <b-radio v-model="formData.scenery" :native-value="0"> 没有明确使用场景 </b-radio>
+            <b-radio v-model="formData.pa" :native-value="4"> 主力机/长期使用 </b-radio>
+            <b-radio v-model="formData.pa" :native-value="3"> 过渡机 </b-radio>
+            <b-radio v-model="formData.pa" :native-value="2"> 老年机 </b-radio>
+            <b-radio v-model="formData.pa" :native-value="1"> 学生机 </b-radio>
+            <b-radio v-model="formData.pa" :native-value="0"> 没有明确使用场景 </b-radio>
           </a-radio-group>
         </div>
         <div class="test-title">手机续航能力是我选择的一项重要指标</div>
@@ -77,7 +77,7 @@
           <a-radio-group default-value="a">
             <b-radio v-model="formData.size" :native-value="2"> 屏幕更大 </b-radio>
             <b-radio v-model="formData.size" :native-value="1"> 更钟意小屏幕 </b-radio>
-            <b-radio v-model="formData.size" :native-value="0"> 更钟意小屏幕 </b-radio>
+            <b-radio v-model="formData.size" :native-value="0"> 无所谓 </b-radio>
           </a-radio-group>
         </div>
         <div class="test-title">我对手机重量有要求</div>
@@ -108,21 +108,15 @@
         </div>
         <div class="test-title">我想从这些品牌中挑选</div>
         <div class="test-component">
-          <a-checkbox-group>
-            <b-checkbox v-model="formData.brands" native-value="apple">苹果</b-checkbox>
-            <b-checkbox v-model="formData.brands" native-value="samsong">三星</b-checkbox>
-            <b-checkbox v-model="formData.brands" native-value="huawei">华为</b-checkbox>
-            <b-checkbox v-model="formData.brands" native-value="xiaomi">小米</b-checkbox>
-            <b-checkbox v-model="formData.brands" native-value="oppo">OPPO</b-checkbox>
-            <b-checkbox v-model="formData.brands" native-value="vivo">VIVO</b-checkbox>
-            <b-checkbox v-model="formData.brands" native-value="oneplus">一加</b-checkbox>
-            <b-checkbox v-model="formData.brands" native-value="meizu">魅族</b-checkbox>
-            <b-checkbox v-model="formData.brands" native-value="oneplus">一加</b-checkbox>
-            <b-checkbox v-model="formData.brands" native-value="oneplus">一加</b-checkbox>
-            <b-checkbox v-model="formData.brands" native-value="oneplus">一加</b-checkbox>
-            <b-checkbox v-model="formData.brands" native-value="oneplus">一加</b-checkbox>
-            <b-checkbox v-model="formData.brands" native-value="oneplus">一加</b-checkbox>
-          </a-checkbox-group>
+          <b-checkbox v-model="formData.brands" native-value="apple">苹果</b-checkbox>
+          <b-checkbox v-model="formData.brands" native-value="samsong">三星</b-checkbox>
+          <b-checkbox v-model="formData.brands" native-value="huawei">华为</b-checkbox>
+          <b-checkbox v-model="formData.brands" native-value="xiaomi">小米</b-checkbox>
+          <b-checkbox v-model="formData.brands" native-value="oppo">OPPO</b-checkbox>
+          <b-checkbox v-model="formData.brands" native-value="vivo">VIVO</b-checkbox>
+          <b-checkbox v-model="formData.brands" native-value="oneplus">一加</b-checkbox>
+          <b-checkbox v-model="formData.brands" native-value="meizu">魅族</b-checkbox>
+          <b-checkbox v-model="formData.brands" native-value="oneplus">一加</b-checkbox>
         </div>
       </b-step-item>
       <template #navigation="{previous, next}">
@@ -140,6 +134,7 @@
 </template>
 
 <script lang="ts">
+import user from "@/store/user";
 import request from "@/utils/request";
 import Vue from "vue";
 import { Component, Prop, Watch, Emit } from "vue-property-decorator";
@@ -147,9 +142,7 @@ import { Component, Prop, Watch, Emit } from "vue-property-decorator";
 @Component
 export default class GuideTest extends Vue {
   activeStep = '2';
-  // gender = 1;
-  // brands: Array<string> = [];
-  // priceRange: Array<number> = [1000, 2000];
+  user: any = {};
   formData: any = {
     gender: 1,
     age: 22,
@@ -164,6 +157,13 @@ export default class GuideTest extends Vue {
     priceRange: [1000, 2000],
     color: [],
     brands: []
+  }
+
+  created() {
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.user = JSON.parse(user);
+    }
   }
 
   goGuide() {
@@ -236,7 +236,7 @@ export default class GuideTest extends Vue {
     const response: any = await request.post(
       'http://localhost:3000/api/v1/product/recommend',
       {
-        userId: 1,
+        userId: this.user.id,
         price: priceRange,
         brands,
         colors,

@@ -126,6 +126,20 @@ product.post("/add", async (ctx, next) => {
   }
 });
 
+product.post("/update", async (ctx, next) => {
+  const { id, params } = ctx.request.body;
+  try {
+    const result = await ProductService.updateProduct(id, params);
+    if (result) {
+      ctx.body = new ApiResponse(0, `新增产品成功！`);
+    } else {
+      ctx.body = new ApiResponse(400, `新增产品失败: 请检查参数`);
+    }
+  } catch (error) { 
+    ctx.body = new ApiResponse(500, `新增产品失败: ${error.message}`);
+  }
+});
+
 product.post("/delete", async (ctx, next) => {
   const { id } = ctx.request.body;
   try {

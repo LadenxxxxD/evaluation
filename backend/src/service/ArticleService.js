@@ -1,15 +1,13 @@
 import Axios from 'axios';
 import ArticleModel from '../model/ArticleModel.js';
 import CommentModel from '../model/CommentModel.js';
+import UserModel from '../model/UserModel.js';
 import { Op } from '../../lib/sequelize.js';
 
 
 const getArticleAll = async () => {
   try {
-    let r = await ArticleModel.findAll({ order: [['created', 'DESC']] });
-    if (r) {
-      return r;
-    }
+    return await ArticleModel.findAll({ order: [['created', 'DESC']] });
   } catch (error) {
     console.log('error: ', error);
   }
@@ -18,17 +16,13 @@ const getArticleAll = async () => {
 // 查找不合法或未审核的文章
 const getInvalidArticleList = async () => {
   try {
-    let r = await ArticleModel.findAll({
+    return await ArticleModel.findAll({
       where: {
-        valid: {
-          [Op.ne]: 1
-        }
+        valid: { [Op.ne]: 1 },
+        reject: { [Op.ne]: 1 },
       },
       order: [['created', 'DESC']]
     });
-    if (r) {
-      return r;
-    }
   } catch (error) {
     console.log('error: ', error);
   }
@@ -37,16 +31,31 @@ const getInvalidArticleList = async () => {
 // 查找待审核文章数量
 const getInvalidArticleCount = async () => {
   try {
-    let count = ArticleModel.count({
+    return ArticleModel.count({
       where: {
-        valid: {
-          [Op.ne]: 1
-        }
+        [Op.and]: [
+          { valid: { [Op.ne]: 1 } },
+          { reject: { [Op.ne]: 1 } },
+        ]
       },
     });
-    return count;
   } catch (error) {
     console.log('查找待审核文章数量时: ', error);
+  }
+}
+
+// 通过用户ID查找驳回文章
+const getRejectdArticle = async (id) => {
+  try {
+    return await ArticleModel.findAll({
+      where: {
+        author_id: id,
+        reject: 1,
+      },
+      order: [['created', 'DESC']]
+    });
+  } catch (error) {
+    console.log('查找驳回文章失败: ', error);
   }
 }
 
@@ -115,9 +124,18 @@ const getArticle = async (id) => {
 }
 
 const passArticle = async (id) => {
-  console.log(id);
   try {
-    let r = await ArticleModel.update({ valid: 1 }, { where: { id } });
+    let r = await ArticleModel.update({ valid: 1, reject: 0 }, { where: { id } });
+    console.log(r);
+    return !!r;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const rejectArticle = async (id) => {
+  try {
+    let r = await ArticleModel.update({ valid: 0, reject: 1 }, { where: { id } });
     console.log(r);
     return !!r;
   } catch (error) {
@@ -139,6 +157,7 @@ const saveArticle = async (data) => {
       htmlcontent: data.content,
       img: data.coverImg,
       valid: false,
+      reject: false,
       created: new Date(),
       updated: new Date()
     });
@@ -152,8 +171,17 @@ const saveArticle = async (data) => {
 
 const getArticleCommentAll = async () => {
   try {
+    CommentModel.hasOne(UserModel, { foreignKey: 'id', sourceKey: 'userId' });
     return await CommentModel.findAll({
-      where: { type: 'article' }
+      where: { type: 'article' },
+      include: {
+        model: UserModel,
+        as: 'User',
+        attributes: {
+          exclude: ['password', 'age', 'gender']
+        },
+        required: true
+      },
     });
   } catch (error) {
     console.log('获取产品评论时出错: ', error);
@@ -182,6 +210,8 @@ export default {
   getArticleAll,
   saveArticle,
   passArticle,
+  rejectArticle,
+  getRejectdArticle,
   getArticleCommentAll,
   addComment
 }

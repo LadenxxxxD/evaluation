@@ -12,6 +12,7 @@
           :productId="currProductId" 
           :visible="editModal.visible" 
           :mode="editModal.mode" 
+          @refresh="getProductList()"
           @close="closeEditModal"/>
       </div>
     </div>

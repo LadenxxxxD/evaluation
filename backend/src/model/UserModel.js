@@ -24,6 +24,15 @@ export const UserModel = sequelize.define('User', {
     age: {
         type: DataTypes.INTEGER
     },
+    isAdmin: {
+        type: DataTypes.TINYINT,
+        get() {
+            return !!this.getDataValue('isAdmin');
+        },
+        set(value) {
+            return this.setDataValue('isAdmin', value ? 1 : 0)
+        }
+    }
 }, {
     tableName: 'user',
     timestamps: false

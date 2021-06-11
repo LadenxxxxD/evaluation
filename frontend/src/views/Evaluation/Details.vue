@@ -161,7 +161,7 @@
         </div>
         <div class="discuss-component">
           <div class="flex-wrapper">
-            <img src="https://pic1.zhimg.com/v2-a97b59854b5dd12e8ba2d0e32abec7c3_is.jpg" class="discuss-avatar">
+            <img :src="user.avatar" class="discuss-avatar">
             <b-input v-model="comment" maxlength="200" type="textarea" style="flex: 1; margin-left: 14px;"></b-input>
           </div>
           <div class="flex-space-between">
@@ -173,18 +173,14 @@
           <div v-for="comment in commentList" :key="comment.id" class="discuss-item flex-column">
             <div class="flex-space-between">
               <div class="flex-center-v">
-                <img src="https://pic1.zhimg.com/v2-a97b59854b5dd12e8ba2d0e32abec7c3_is.jpg" class="discuss-avatar">
-                <span style="font-size: 16px; font-weight: 600; margin-left: 14px;">用户名</span>
+                <img :src="comment.User.avatar" class="discuss-avatar">
+                <span style="font-size: 16px; font-weight: 600; margin-left: 14px;">{{ comment.User.nickname }}</span>
               </div>
                 <span style="float: right;">{{ fmtCreateTime(comment.createAt) }}</span>
             </div>
             <div style="margin: 6px 50px 6px; font-size: 18px;">
               {{ comment.content }}
             </div>
-            <!-- <div style="margin-left: 50px; font-size: 14px;">
-              <span>回答用户:</span>
-              <span style="margin-left: 8px;">挺好的</span>
-            </div> -->
             <a-divider></a-divider>
           </div>
         </div>
@@ -208,6 +204,7 @@ import { formatTimestampSecond } from '@/utils/util';
   }
 })
 export default class Details extends Vue {
+  user: any = {};
   userRate: number = 4.8;
   fitRatio: number = 4;
   product: any = {};
@@ -215,7 +212,6 @@ export default class Details extends Vue {
   rateInfo: any = {};
   articles: Array<any> = [];
   officialArticle: any = {};
-  // activeTab: number = 0;
   rateModal = {
     visible: false,
     rate: 0
@@ -227,6 +223,13 @@ export default class Details extends Vue {
     const { id } = this.$route.params;
     if (!id) return undefined;
     return parseInt(id, 10);
+  }
+
+  created() {
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.user = JSON.parse(user);
+    }
   }
 
   mounted() {

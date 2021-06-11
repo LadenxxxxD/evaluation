@@ -1,9 +1,13 @@
 <template>
   <div class="guide">
     <DivisionTitle title="最佳匹配" :show-more="false" style="width: 100%; margin-bottom: 10px;" />
-    <div class="best-recommend-container card">
+    <div v-if="!productData.best.id" class="best-recommend-container card flex-middle">
+      暂无推荐，请点击
+      <a href="/guide/test">获取推荐</a>
+    </div>
+    <div v-else class="best-recommend-container card">
       <div class="best-recommend-title">根据您的偏好，认为它可能最适合您：</div>
-      <div class="best-recommend-phone-name">OPPO Finx X3 Pro</div>
+      <div class="best-recommend-phone-name">{{ productData.best.name }}</div>
       <div class="best-recommend-title">选择它的理由：</div>
       <div class="best-recommend-item-container flex-wrapper">
         <div class="best-recommend-keyword flex-column">
@@ -46,11 +50,11 @@
           <div class="keyword-row">Sony IMX766 传感器，5000万广角摄像头</div>
           <a-row style="margin-top: 40px;">
             <a-col :span="8">
-              <a-button
-                type="primary"
-                size="large"
-                style="width: 200px; background-color: #017335;"
-              >立即了解</a-button>
+              <a :href="`/evaluation/details/${productData.best.id}`">
+                <a-button type="primary" size="large" style="width: 200px; background-color: #017335;">
+                  立即了解
+                </a-button>
+              </a> 
             </a-col>
             <a-col :span="8">
               <a-button type="link" style="width: 200px" href="/guide/test">重新测试</a-button>
@@ -65,25 +69,23 @@
         </div>
       </div>
     </div>
-    <DivisionTitle title="其他推荐" style="width: 100%; margin: 40px 0 10px 0;" />
-    <div class="second-recommend">
-      <section class="card-10-hover">
-        <img src="@/assets/mobile/OnePlus-9-silver.png" />
-        <div class="phone-name flex-center">一加9</div>
-      </section>
-      <section class="card-10-hover">
-        <img src="@/assets/mobile/XiaoMi-11-pro.png" />
-        <div class="phone-name flex-center">小米11 Pro</div>
-      </section>
-      <section class="card-10-hover">
-        <img src="@/assets/mobile/OnePlus-9-silver.png" />
-        <div class="phone-name flex-center">一加9</div>
-      </section>
-      <section class="card-10-hover">
-        <img src="@/assets/mobile/OnePlus-9-silver.png" />
-        <div class="phone-name flex-center">一加9</div>
-      </section>
-    </div>
+    <template v-if="productData.other.length">
+      <DivisionTitle title="其他推荐" style="width: 100%; margin: 40px 0 10px 0;" />
+      <div class="second-recommend">
+        <section v-for="phone in productData.other" :key="phone.id" class="second-item card-10-hover">
+          <img :src="phone.cover_img" />
+          <div class="phone-name flex-center">{{ phone.name }}</div>
+        </section>
+        <!-- <section class="card-10-hover">
+          <img src="@/assets/mobile/XiaoMi-11-pro.png" />
+          <div class="phone-name flex-center">小米11 Pro</div>
+        </section>
+        <section class="card-10-hover">
+          <img src="@/assets/mobile/OnePlus-9-silver.png" />
+          <div class="phone-name flex-center">一加9</div>
+        </section> -->
+      </div>
+    </template>
   </div>
 </template>
 <script lang="ts">
@@ -97,7 +99,51 @@ import request from "@/utils/request";
     DivisionTitle,
   }
 })
-export default class Home extends Vue { }
+export default class Guide extends Vue { 
+  user: any = {};
+  recommend: any = {};
+  productData: any = {
+    best: {},
+    other: []
+  };
+
+  created() {
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.user = JSON.parse(user);
+    }
+  }
+
+  mounted() {
+    this.getRecommend();
+  }
+
+  async getRecommend() {
+    const response: any = await request.get(`http://localhost:3000/api/v1/product/recommend`, { userId: this.user.id })
+    if (response.code === 0) {
+      this.recommend = response.data;
+      this.getBestProduct();
+      this.getOtherProduct();
+    }
+  }
+
+  async getBestProduct() {
+    const response: any = await request.get(`http://localhost:3000/api/v1/product/${this.recommend.best}`)
+    if (response.code === 0) {
+      this.productData.best = response.data;
+    }
+  }
+
+  async getOtherProduct() {
+    const { others } = this.recommend;
+    await others.forEach(async (id: number) => {
+      const response: any = await request.get(`http://localhost:3000/api/v1/product/${id}`)
+      if (response.code === 0) {
+        this.productData.other.push(response.data);
+      }
+    })
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -162,16 +208,24 @@ export default class Home extends Vue { }
 
 .second-recommend {
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
   width: 100%;
 
   & > section {
-    width: 20%;
+    width: 24%;
 
     & > img {
       width: calc(100% - 20px);
       height: 260px;
       margin: 0 auto;
+    }
+  }
+
+  .second-item {
+    margin: 0 10px;
+
+    &:first-child {
+      margin-left: 0;
     }
   }
 

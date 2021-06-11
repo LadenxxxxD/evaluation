@@ -1,6 +1,7 @@
 import Router from 'koa-router';
 import ApiResponse from '../../../lib/ApiResponse.js';
 import LoginService from '../../service/LoginService.js'
+import UserService from '../../service/UserService.js'
 
 'use strict';
 
@@ -20,6 +21,7 @@ login.post("/", async (ctx, next) => {
 		if (canLogin) {
 			// 签发token
 			const token = LoginService.signToken(username);
+			const data = await UserService.findByUserName(username);
 			// 设置cookie
 			ctx.cookies.set('access_token', token, {
 				maxAge: 24 * 60 * 60 * 1000, // 1h
@@ -27,7 +29,7 @@ login.post("/", async (ctx, next) => {
 				httpOnly: true
 			});
 			// 返回json
-			return ctx.body = new ApiResponse(200, '登录成功');
+			return ctx.body = new ApiResponse(200, '登录成功', data);
 		}
 		return ctx.body = new ApiResponse(400, `登录失败: 用户名或密码错误`);
 	} catch (err) {

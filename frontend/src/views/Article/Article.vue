@@ -22,17 +22,9 @@
       </div>
     </div>
     <div class="comment-main-container">
-      <!-- <Comment
-        v-model="commentsData"
-        :user="currentUser"
-        :before-submit="addComment"
-        :before-delete="deleteComment"
-        :before-like="likeComment"
-        :upload-img="uploadOrCopyImg"
-      /> -->
       <div class="discuss-component">
           <div class="flex-wrapper">
-            <img src="https://pic1.zhimg.com/v2-a97b59854b5dd12e8ba2d0e32abec7c3_is.jpg" class="discuss-avatar">
+            <img :src="user.avatar" class="discuss-avatar">
             <b-input v-model="comment" maxlength="200" type="textarea" style="flex: 1; margin-left: 14px;"></b-input>
           </div>
           <div class="flex-space-between">
@@ -44,10 +36,10 @@
           <div v-for="comment in commentList" :key="comment.id" class="discuss-item flex-column">
             <div class="flex-space-between">
               <div class="flex-center-v">
-                <img src="https://pic1.zhimg.com/v2-a97b59854b5dd12e8ba2d0e32abec7c3_is.jpg" class="discuss-avatar">
-                <span style="font-size: 16px; font-weight: 600; margin-left: 14px;">用户名</span>
+                <img :src="comment.User.avatar" class="discuss-avatar">
+                <span style="font-size: 16px; font-weight: 600; margin-left: 14px;">{{ comment.User.nickname }}</span>
               </div>
-                <span style="float: right;">2021-5-24 20:31:22</span>
+                <span style="float: right;">{{ formatCreateTime(comment.createAt) }}</span>
             </div>
             <div style="margin: 6px 50px 6px; font-size: 18px;">
               {{ comment.content }}
@@ -79,11 +71,7 @@ import IconFont from '@/components/IconFont.vue';
   }
 })
 export default class Article extends Vue {
-  currentUser = {
-    author: true,
-    name: '管理员',
-    avatar: 'https://pic1.zhimg.com/v2-a97b59854b5dd12e8ba2d0e32abec7c3_is.jpg'
-  }
+  user: any = {}
   article = {
     id: 12601,
     title: '',
@@ -93,21 +81,12 @@ export default class Article extends Vue {
   }
   comment: string = '';
   commentList: Array<any> = [];
-  commentsData: Array<any> = [
-    {
-      id: '', // 唯一 id，必需
-      content: 'tyr', // 评论内容，必需
-      imgSrc: '', // 评论中的图片地址，非必需
-      children: [], // 子评论（回复），非必需
-      likes: 0, // 点赞数，非必需
-      reply: null, // 子评论（回复）人信息，非必需
-      createAt: '2020.11.24', // 评论时间，必需
-      user: this.currentUser
-    }
-  ]
 
   created() {
-    // this.addData(1)
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.user = JSON.parse(user);
+    }
   }
   
   mounted() {
@@ -167,7 +146,8 @@ export default class Article extends Vue {
   async getComments() {
     const response: any = await request.get(`http://localhost:3000/api/v1/article/comment`);
     if (response.code === 0) {
-      this.commentList = response.data;
+      const data = response.data || [];
+      this.commentList = data.filter((comment: any) => comment.refId === this.article.id);
     }
   }
 }

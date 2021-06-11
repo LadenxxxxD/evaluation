@@ -57,6 +57,17 @@ article.get("/comment", async (ctx, next) => {
   }
 });
 
+article.get("/reject", async (ctx, next) => {
+  const { id } = ctx.query;
+  try {
+    const data = await ArticleService.getRejectdArticle(id);
+    ctx.body = new ApiResponse(0, `获取驳回文章列表成功`, data);
+  } catch (err) {
+    console.error(err);
+    ctx.body = new ApiResponse(400, `获取失败: ${err.message}`);
+  }
+});
+
 article.get("/listByPage", async (ctx, next) => {
   const { pageNum = '0', pageSize = '10' } = ctx.query;
   const page = parseInt(pageNum, 10);
@@ -86,6 +97,17 @@ article.post("/pass", async (ctx, next) => {
   const { id } = ctx.request.body;
   try {
     const data = await ArticleService.passArticle(id);
+    ctx.body = new ApiResponse(0, `发表成功`, data);
+  } catch (err) {
+    console.error(err);
+    ctx.body = new ApiResponse(400, `发表失败: ${err.message}`);
+  }
+});
+
+article.post("/reject", async (ctx, next) => {
+  const { id } = ctx.request.body;
+  try {
+    const data = await ArticleService.rejectArticle(id);
     ctx.body = new ApiResponse(0, `发表成功`, data);
   } catch (err) {
     console.error(err);

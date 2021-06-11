@@ -31,11 +31,11 @@
         <a-select
           mode="multiple"
           size="large"
-          :default-value="[123, 124]"
+          :default-value="[]"
           style="width: 100%"
           placeholder="Please select"
         >
-          <a-select-option :key="123">小米11Pro</a-select-option>
+          <a-select-option v-for="product in productList" :key="product.id">{{ product.name }}</a-select-option>
           <a-select-option :key="124">一加7Pro</a-select-option>
         </a-select>
       </b-field>
@@ -82,12 +82,22 @@ import { uuid } from '@/utils/util';
 
 @Component
 export default class WriteArticle extends Vue {
+  user: any = {};
   title: string = "";
   value: string = "";
   htmlValue: string = "";
   drawerVisible: boolean = false;
   currentAddTag: string = '';
   userTags: Array<any> = [];
+  productList: Array<any> = [];
+
+  created() {
+    // this.addData(1)
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.user = JSON.parse(user);
+    }
+  }
 
   onEditorChange(value: string, html: string) {
     this.htmlValue = html;
@@ -95,6 +105,7 @@ export default class WriteArticle extends Vue {
 
   onDrawerOpen() {
     this.drawerVisible = true;
+    this.getProductAll();
   }
 
   onDrawerClose() {
@@ -128,7 +139,7 @@ export default class WriteArticle extends Vue {
     const response: any = await request.post(
       `http://localhost:3000/api/v1/article/add`,
       {
-        author: "admin",
+        author: this.user.username,
         title: this.title,
         content: this.htmlValue,
       }
@@ -148,6 +159,13 @@ export default class WriteArticle extends Vue {
         duration: 5000,
         message: `发布失败: ${response.message}`,
       });
+    }
+  }
+
+  async getProductAll() {
+    const response: any = await request.get(`http://localhost:3000/api/v1/product/all`);
+    if (response.code === 0) {
+      this.productList = response.data;
     }
   }
 

@@ -157,6 +157,7 @@ export default class Login extends Vue {
     );
     if (response && response.code === 200) {
       console.log('登录成功: ', response);
+      localStorage.setItem('user', JSON.stringify(response.data));
       this.$router.push('/');
     } else {
       Toast.open({
@@ -190,6 +191,7 @@ export default class Login extends Vue {
     );
     if (response && response.code === 200) {
       console.log('注册成功: ', response);
+      localStorage.setItem('user', JSON.stringify(response.data));
       this.$router.push({
         path: '/'
       })
@@ -212,6 +214,7 @@ export default class Login extends Vue {
       this.showRegisterBtn = this.showRegister;
     }, 1000);
   }
+
 }
 </script>
 

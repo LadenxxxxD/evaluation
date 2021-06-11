@@ -43,8 +43,11 @@
                   </b-input>
                 </b-field>
                 <b-field label="品牌">
-                  <b-input  v-model="productParams.brand">
-                  </b-input>
+                  <!-- <b-input  v-model="productParams.brand"> -->
+                    <a-select v-model="productParams.brand" style="width: 100%;">
+                      <a-select-option v-for="brand in brandList" :key="brand.id">{{ brand.chName }}</a-select-option>
+                    </a-select>
+                  <!-- </b-input> -->
                 </b-field>
                 <b-field label="图片地址">
                   <b-input  v-model="productParams.cover_img">
@@ -117,7 +120,9 @@
               <b-input v-model="zolUrl" style="flex: 1; margin: 0 20px;"></b-input>
               <b-button type="is-info" @click="fetchZolParams">抓取</b-button>
             </div>
-            <a-textarea v-model="productParams.params" :auto-size="{ minRows: 10, maxRows: 20 }" style="margin-top: 10px;"></a-textarea>
+            <a-spin tip="正在抓取数据..." :spinning="fetchLoading">
+              <a-textarea v-model="productParams.params" :auto-size="{ minRows: 10, maxRows: 20 }" style="margin-top: 10px;"></a-textarea>
+            </a-spin>
           </b-tab-item>
         </b-tabs>
         <div class="product-modal-footer flex-space-between">
@@ -163,7 +168,8 @@ export default class EditProductModal extends Vue {
     official_article: null,
     related_articles: []
   };
-
+  brandList: Array<any> = [];
+  fetchLoading: boolean = false;
   nameValidte = {
     error: false,
     message: ''
@@ -176,10 +182,15 @@ export default class EditProductModal extends Vue {
 
   zolUrl: string = '';
 
+  created() {
+    // this.getBrand();
+  }
+
   close() {
     this.productParams = {
       name: '',
       price: null,
+      brand: '',
       cover_img: '',
       cpu: '',
       memory: '',
@@ -201,6 +212,7 @@ export default class EditProductModal extends Vue {
     this.productParams = {
       name: '',
       price: null,
+      brand: '',
       cover_img: '',
       cpu: '',
       memory: '',
@@ -226,17 +238,21 @@ export default class EditProductModal extends Vue {
         message: '请先输入目标地址！',
       });
     }
+    this.fetchLoading = true;
     const response: any = await request.get(
       `http://localhost:3000/api/v1/product/fetchZolParamsByUrl`,
       { url: this.zolUrl }
     );
     if (response.code === 0) {
       this.productParams.params = response.data;
+      this.fetchLoading = false;
+    } else {
+      this.fetchLoading = false;
     }
   }
 
   validte(): boolean {
-    const { name, price } = this.productParams;
+    const { name, price, brand } = this.productParams;
     let result = true;
     if (!name) {
       this.nameValidte.error = true;
@@ -248,22 +264,45 @@ export default class EditProductModal extends Vue {
       this.priceValidte.message = '价格不能为空！';
       result = false;
     }
+    if (!brand) {
+      this.$toast.open({
+        type: 'is-warning',
+        message: '产品品牌不能为空',
+      })
+      result = false;
+    }
     return result;
+  }
+
+  async getBrand() {
+    const response: any = await request.get('http://localhost:3000/api/v1/product/brand');
+    if (response.code === 0) {
+      this.brandList = response.data;
+    }
   }
 
   async submit(): Promise<void> {
     if (!this.validte()) return;
-    const response: any = await request.post(
-      `http://localhost:3000/api/v1/product/add`,
-      { params: this.productParams }
+    let api = '';
+    if (this.mode === 'create') {
+      api = 'http://localhost:3000/api/v1/product/add';
+    } else {
+      api = 'http://localhost:3000/api/v1/product/update';
+
+    }
+    const response: any = await request.post(api,
+      {
+        id: this.productId || 0,
+        params: this.productParams
+      }
     );
-    console.log("🚀 ~ file: EditProductModal.vue ~ line 259 ~ EditProductModal ~ submit ~ response", response)
     if (response.code === 0) {
       this.$toast.open({
         type: "is-success",
         duration: 5000,
         message: response.message,
       });
+      this.$emit('refresh');
       this.close();
     } else {
       this.$toast.open({
@@ -281,6 +320,7 @@ export default class EditProductModal extends Vue {
     if (response.code === 0) {
       this.productParams = response.data;
     }
+    this.getBrand();
   }
 };
 </script>

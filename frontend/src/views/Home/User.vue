@@ -19,7 +19,7 @@
         :footer="null"
       >
         <div class="flex-wrapper">
-          <img src="https://pic1.zhimg.com/v2-a97b59854b5dd12e8ba2d0e32abec7c3_is.jpg" style="width: 100px; height: 100px;margin-right: 40px;">
+          <img src="userInfo.avatar" style="width: 100px; height: 100px;margin-right: 40px;">
           <div style="flex: 1;">
             <b-field label="用户名">
               <b-input v-model="userInfo.username" disabled></b-input>
@@ -80,7 +80,7 @@ import request from '@/utils/request';
 @Component({})
 export default class UserInfo extends Vue {
   emptyImage = (Empty as any).PRESENTED_IMAGE_SIMPLE;
-  currentUserId = 1;
+  user: any = {};
   userInfo: any = {
     username: '',
     nickname: '',
@@ -91,6 +91,13 @@ export default class UserInfo extends Vue {
 
   infoEditModal = {
     visible: false,
+  }
+
+  created() {
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.user = JSON.parse(user);
+    }
   }
 
   mounted() {
@@ -106,14 +113,14 @@ export default class UserInfo extends Vue {
   }
 
   async getUserInfo() {
-    const response: any = await request.get(`http://localhost:3000/api/v1/user/${this.currentUserId}`);
+    const response: any = await request.get(`http://localhost:3000/api/v1/user/${this.user.id}`);
     if (response.code === 0) {
       this.userInfo = response.data;
     }
   }
 
   async saveUserInfo() {
-    const response: any = await request.post(`http://localhost:3000/api/v1/user/${this.currentUserId}`, this.userInfo);
+    const response: any = await request.post(`http://localhost:3000/api/v1/user/${this.user.id}`, this.userInfo);
     if (response.code === 0) {
       this.userInfo = response.data;
     }
@@ -144,7 +151,7 @@ export default class UserInfo extends Vue {
     .avatar {
       height: 128px;
       width: 128px;
-      background-color: blueviolet;
+      background-color: #ccc;
       position: absolute;
       top: -64px;
       left: 64px;

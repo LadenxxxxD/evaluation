@@ -1,10 +1,11 @@
 import UserModel from '../model/UserModel.js';
 
 const findByUserName = async (username) => {
-  let r = await UserModel.findOne({
+  const r = await UserModel.findOne({
+    attributes: ['id', 'username', 'nickname', 'avatar', 'isAdmin'],
     where: {
       username
-    }
+    },
   });
   if (r) return r.get();
   return null;

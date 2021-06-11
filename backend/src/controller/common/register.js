@@ -2,6 +2,7 @@ import Router from 'koa-router';
 import ApiResponse from '../../../lib/ApiResponse.js';
 import RegisterService from '../../service/RegisterService.js';
 import LoginService from '../../service/LoginService.js';
+import UserService from '../../service/UserService.js'
 
 const register = new Router();
 
@@ -24,6 +25,7 @@ register.post('/', async ctx => {
 		if (r) {
 			// 签发token
 			const token = LoginService.signToken(username);
+			const data = await UserService.findByUserName(username);
 			// 设置cookie
 			ctx.cookies.set('access_token', token, {
 				maxAge: 60 * 60 * 1000, // 1h
@@ -31,7 +33,7 @@ register.post('/', async ctx => {
 				httpOnly: true
 			});
 			// 返回json
-			ctx.body = new ApiResponse(200, '注册成功');
+			ctx.body = new ApiResponse(200, '注册成功', data);
 		}
 		return;
 

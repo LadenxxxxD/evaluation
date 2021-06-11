@@ -32,7 +32,7 @@
         <a-divider type="vertical"></a-divider>
         <a class="action-pass" @click="passArticle(row.id)">通过</a>
         <a-divider type="vertical"></a-divider>
-        <a style="color: #f14668;">拒绝</a>
+        <a style="color: #f14668;" @click="rejectArticle(row.id)">拒绝</a>
       </b-table-column>
 
       <template #bottom-left>
@@ -96,7 +96,11 @@ export default class Audit extends Vue {
 
   async passArticle(id: number) {
     const response: any = await request.post(`http://localhost:3000/api/v1/article/pass`, { id });
-    console.log("🚀 ~ file: Audit.vue ~ line 101 ~ Audit ~ passArticle ~ response", response)
+    this.data = this.data.filter((item: any) => item.id !== id);
+  }
+
+  async rejectArticle(id: number) {
+    const response: any = await request.post(`http://localhost:3000/api/v1/article/reject`, { id });
     this.data = this.data.filter((item: any) => item.id !== id);
   }
 

@@ -5,6 +5,7 @@ import BrandModel from '../model/BrandModel.js';
 import RecommendModel from '../model/RecommendModel.js';
 import CommentModel from '../model/CommentModel.js';
 import RateModel from '../model/RateModel.js';
+import UserModel from '../model/UserModel.js';
 import { getParamsByUrl } from '../crawler/fetchPhoneParams.js';
 
 const getProduct = async (id) => {
@@ -103,18 +104,27 @@ const addProduct = async (params) => {
   }
 }
 
+const updateProduct = async (id, params) => {
+  try {
+    let r = await ProductModel.update({ ...params }, { where: { id } });
+    return !!r;
+  } catch (error) {
+    console.log('更新产品时出错: ', error);
+  }
+}
+
 const getRecommend = async (userId) => {
   try {
-    return await RecommendModel.findOne(userId);
+    return await RecommendModel.findByPk(userId);
   } catch (error) {
-    console.log('获取产品品牌时出错: ', error);
+    console.log('获取产品推荐时出错: ', error);
   }
 }
 
 const generateRecommend = async (user, data) => {
   const { price, brands, tags, colors } = data;
   try {
-    ProductModel.hasOne(RateModel, { foreignKey: 'id' });
+    ProductModel.hasOne(RateModel, { foreignKey: 'id' } );
     const priceRecord = await ProductModel.findAll({
       where: {
         price : { [Op.between]: [price[0], price[1]] }
@@ -125,8 +135,9 @@ const generateRecommend = async (user, data) => {
       },
       order: [['Rate', 'antutu', 'DESC']]
     });
-    const best =  priceRecord[0];
-    const other = priceRecord.slice(1,4);
+    const best =  priceRecord[0] || {};
+    const other = priceRecord.slice(1,4) || [];
+    const delResult = await RecommendModel.destroy({ where: { id: user } })
     const saveResult = RecommendModel.create({
       id: user,
       best: best.id,
@@ -138,14 +149,23 @@ const generateRecommend = async (user, data) => {
       return null;
     }
   } catch (error) {
-    console.log('获取产品品牌时出错: ', error);
+    console.log('生成产品推荐时出错: ', error);
   }
 }
 
 const getProductCommentAll = async () => {
   try {
+    CommentModel.hasOne(UserModel, { foreignKey: 'id', sourceKey: 'userId' });
     return await CommentModel.findAll({
-      where: { type: 'product' }
+      where: { type: 'product' },
+      include: {
+        model: UserModel,
+        as: 'User',
+        attributes: {
+          exclude: ['password', 'age', 'gender']
+        },
+        required: true
+      },
     });
   } catch (error) {
     console.log('获取产品评论时出错: ', error);
@@ -199,7 +219,9 @@ export default {
   fetchProductParams,
   delProduct,
   addProduct,
+  updateProduct,
   getBrandAll,
+  getRecommend,
   generateRecommend,
   getProductCommentAll,
   addComment

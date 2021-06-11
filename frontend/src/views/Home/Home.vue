@@ -16,10 +16,10 @@
           <div class="custom-row" style="margin-bottom: 10px;">
             <a-avatar
               :size="64"
-              src="https://pic1.zhimg.com/v2-a97b59854b5dd12e8ba2d0e32abec7c3_is.jpg"
+              :src="user.avatar"
             ></a-avatar>
             <div style="margin: 5px 20px;">
-              <div class="info-username">用户名</div>
+              <div class="info-username">{{ user.nickname }}</div>
               <div style="margin-top: 5px;">
                 <b-tag type="is-info is-light" size="is-small">Lv 6</b-tag>
                 <b-tag type="is-primary" style="margin: 0 10px;">测评达人</b-tag>
@@ -100,7 +100,15 @@ import request from "@/utils/request";
   }
 })
 export default class Home extends Vue {
-  emptyImage = Empty.PRESENTED_IMAGE_SIMPLE
+  emptyImage = (Empty as any).PRESENTED_IMAGE_SIMPLE;
+  user: any = {};
+
+  created() {
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.user = JSON.parse(user);
+    }
+  }
 }
 </script>
 
